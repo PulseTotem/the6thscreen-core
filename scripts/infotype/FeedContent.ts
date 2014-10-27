@@ -182,7 +182,7 @@ class FeedContent extends Info {
      * @method getFeedNodes
      * @returns {Array<FeedNode>} The FeedContent's feedNodes.
      */
-    getFeedNodes() : string {
+    getFeedNodes() : Array<FeedNode> {
         return this._feedNodes;
     }
 
