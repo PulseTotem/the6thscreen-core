@@ -4,6 +4,7 @@
 
 /// <reference path="./Info.ts" />
 /// <reference path="./FeedNode.ts" />
+/// <reference path="./exceptions/InfoException.ts" />
 
 class FeedContent extends Info {
 
@@ -13,9 +14,8 @@ class FeedContent extends Info {
      * @property _title
      * @type string
      * @private
-     * @default null
      */
-    private _title : string = null;
+    private _title : string;
 
     /**
      * FeedContent's description.
@@ -23,9 +23,8 @@ class FeedContent extends Info {
      * @property _description
      * @type string
      * @private
-     * @default null
      */
-    private _description : string = null;
+    private _description : string;
 
     /**
      * FeedContent's url.
@@ -33,9 +32,8 @@ class FeedContent extends Info {
      * @property _url
      * @type string
      * @private
-     * @default null
      */
-    private _url : string = null;
+    private _url : string;
 
     /**
      * FeedContent's language.
@@ -43,9 +41,8 @@ class FeedContent extends Info {
      * @property _language
      * @type string
      * @private
-     * @default null
      */
-    private _language : string = null;
+    private _language : string;
 
     /**
      * FeedContent's logo.
@@ -53,9 +50,8 @@ class FeedContent extends Info {
      * @property _logo
      * @type string
      * @private
-     * @default null
      */
-    private _logo : string = null;
+    private _logo : string;
 
     /**
      * FeedContent's nodes.
@@ -71,9 +67,15 @@ class FeedContent extends Info {
      *
      * @constructor
      */
-    constructor() {
-       super();
-       this._feedNodes = new Array<FeedNode>();
+    constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, castingDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10000,
+                title : string = null, description : string = null, url : string = null, langage : string = null, logo : string = null, feedNodes : Array<FeedNode> = new Array<FeedNode>()) {
+       super(id, priority, creationDate, castingDate, obsoleteDate, durationToDisplay);
+        this._title = title;
+        this._description = description;
+        this._url = url;
+        this._language = langage;
+        this._logo = logo;
+        this._feedNodes = feedNodes;
     }
 
     /**
@@ -194,5 +196,62 @@ class FeedContent extends Info {
      */
     addFeedNode(node : FeedNode) {
         this._feedNodes.push(node);
+    }
+
+    /**
+     * Return a FeedContent instance from a JSON Object.
+     *
+     * @method fromJSONObject
+     * @static
+     * @param {JSONObject} json - The JSON Object
+     * @return {FeedContent} The InfoType instance.
+     */
+    static fromJSONObject(jsonObject : any) : FeedContent {
+        if (!jsonObject._id) {
+            throw new InfoException("A FeedContent object should have an ID.");
+        }
+        if(!jsonObject._priority) {
+            throw new InfoException("A FeedContent object should have a priority.");
+        }
+        if(!jsonObject._creationDate) {
+            throw new InfoException("A FeedContent object should have a creationDate.");
+        }
+        if(!jsonObject._castingDate) {
+            throw new InfoException("A FeedContent object should have a castingDate.");
+        }
+        if(!jsonObject._obsoleteDate) {
+            throw new InfoException("A FeedContent object should have an obsoleteDate.");
+        }
+        if(!jsonObject._durationToDisplay) {
+            throw new InfoException("A FeedContent object should have a durationToDisplay.");
+        }
+        if(!jsonObject._title) {
+            throw new InfoException("A FeedContent object should have a title.");
+        }
+        if(!jsonObject._description) {
+            throw new InfoException("A FeedContent object should have a description.");
+        }
+        if(!jsonObject._url) {
+            throw new InfoException("A FeedContent object should have an url.");
+        }
+        if(!jsonObject._language) {
+            throw new InfoException("A FeedContent object should have a language.");
+        }
+        if(!jsonObject._logo) {
+            throw new InfoException("A FeedContent object should have a logo.");
+        }
+        if(!jsonObject._feedNodes) {
+            throw new InfoException("A FeedContent object should have feedNodes.");
+        }
+        var fc : FeedContent = new FeedContent(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._castingDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay,
+                                jsonObject._title, jsonObject._description, jsonObject._url, jsonObject._language, jsonObject._logo);
+
+        for(var i = 0; i < jsonObject._feedNodes.length; i++) {
+            var fnDesc = jsonObject._feedNodes[i];
+            var fn : FeedNode = FeedNode.fromJSONObject(fnDesc);
+            fc.addFeedNode(fn);
+        }
+
+        return fc;
     }
 }

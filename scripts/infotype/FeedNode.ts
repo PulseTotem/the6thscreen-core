@@ -12,9 +12,8 @@ class FeedNode extends Info {
      * @property _title
      * @type string
      * @private
-     * @default null
      */
-    private _title : string = null;
+    private _title : string;
 
     /**
      * FeedNode's description.
@@ -22,9 +21,8 @@ class FeedNode extends Info {
      * @property _description
      * @type string
      * @private
-     * @default null
      */
-    private _description : string = null;
+    private _description : string;
 
     /**
      * FeedNode's summary.
@@ -32,9 +30,8 @@ class FeedNode extends Info {
      * @property _summary
      * @type string
      * @private
-     * @default null
      */
-    private _summary : string = null;
+    private _summary : string;
 
     /**
      * FeedNode's url.
@@ -42,9 +39,8 @@ class FeedNode extends Info {
      * @property _url
      * @type string
      * @private
-     * @default null
      */
-    private _url : string = null;
+    private _url : string;
 
     /**
      * FeedNode's publication date.
@@ -52,9 +48,8 @@ class FeedNode extends Info {
      * @property _pubDate
      * @type string
      * @private
-     * @default null
      */
-    private _pubDate : string = null;
+    private _pubDate : string;
 
     /**
      * FeedNode's author.
@@ -62,17 +57,23 @@ class FeedNode extends Info {
      * @property _author
      * @type string
      * @private
-     * @default null
      */
-    private _author : string = null;
+    private _author : string;
 
     /**
      * Constructor.
      *
      * @constructor
      */
-    constructor() {
-        super();
+    constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, castingDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10000,
+                title : string = null, description : string = null, summary : string = null, url : string = null, pubDate : string = null, author : string = null) {
+        super(id, priority, creationDate, castingDate, obsoleteDate, durationToDisplay);
+        this._title = title;
+        this._description = description;
+        this._summary = summary;
+        this._url = url;
+        this._pubDate = pubDate;
+        this._author = author;
     }
 
     /**
@@ -193,5 +194,56 @@ class FeedNode extends Info {
      */
     setAuthor(author : string) {
         this._author = author;
+    }
+
+    /**
+     * Return a FeedNode instance from a JSON Object.
+     *
+     * @method fromJSONObject
+     * @static
+     * @param {JSONObject} json - The JSON Object
+     * @return {FeedNode} The InfoType instance.
+     */
+    static fromJSONObject(jsonObject : any) : FeedNode {
+        if (!jsonObject._id) {
+            throw new InfoException("A FeedNode object should have an ID.");
+        }
+        if(!jsonObject._priority) {
+            throw new InfoException("A FeedNode object should have a priority.");
+        }
+        if(!jsonObject._creationDate) {
+            throw new InfoException("A FeedNode object should have a creationDate.");
+        }
+        if(!jsonObject._castingDate) {
+            throw new InfoException("A FeedNode object should have a castingDate.");
+        }
+        if(!jsonObject._obsoleteDate) {
+            throw new InfoException("A FeedNode object should have an obsoleteDate.");
+        }
+        if(!jsonObject._durationToDisplay) {
+            throw new InfoException("A FeedNode object should have a durationToDisplay.");
+        }
+        if(!jsonObject._title) {
+            throw new InfoException("A FeedNode object should have a title.");
+        }
+        if(!jsonObject._description) {
+            throw new InfoException("A FeedNode object should have a description.");
+        }
+        if(!jsonObject._summary) {
+            throw new InfoException("A FeedNode object should have a summary.");
+        }
+        if(!jsonObject._url) {
+            throw new InfoException("A FeedNode object should have an url.");
+        }
+        if(!jsonObject._pubDate) {
+            throw new InfoException("A FeedNode object should have a pubDate.");
+        }
+        if(!jsonObject._author) {
+            throw new InfoException("A FeedNode object should have an author.");
+        }
+        var fn : FeedNode = new FeedNode(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._castingDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay,
+            jsonObject._title, jsonObject._description, jsonObject._summary, jsonObject._url, jsonObject._pubDate, jsonObject._author);
+
+        return fn;
     }
 }

@@ -11,16 +11,36 @@ class Info {
 	private _obsoleteDate : Date;
 	private _durationToDisplay : number;
 
-	constructor() {
-		this._id = "toto";
-
+	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, castingDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10000) {
+		this._id = id;
+        this._priority = priority;
+        this._creationDate = creationDate;
+        this._castingDate = castingDate;
+        this._obsoleteDate = obsoleteDate;
+        this._durationToDisplay = durationToDisplay;
 	}
 
-	getDurationToDisplay() {
-		return this._durationToDisplay;
-	}
+    getId() {
+        return this._id;
+    }
+
+    getPriority() {
+        return this._priority;
+    }
+
+    getCreationDate() {
+        return this._creationDate;
+    }
+
+    getCastingDate() {
+        return this._castingDate;
+    }
 
 	getObsoleteDate() {
 		return this._obsoleteDate;
 	}
+
+    getDurationToDisplay() {
+        return this._durationToDisplay;
+    }
 }
