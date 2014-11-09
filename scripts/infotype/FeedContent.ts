@@ -67,9 +67,9 @@ class FeedContent extends Info {
      *
      * @constructor
      */
-    constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, castingDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10000,
+    constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10000, castingDate : Date = null,
                 title : string = null, description : string = null, url : string = null, langage : string = null, logo : string = null, feedNodes : Array<FeedNode> = new Array<FeedNode>()) {
-       super(id, priority, creationDate, castingDate, obsoleteDate, durationToDisplay);
+       super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
         this._title = title;
         this._description = description;
         this._url = url;
@@ -207,43 +207,45 @@ class FeedContent extends Info {
      * @return {FeedContent} The InfoType instance.
      */
     static fromJSONObject(jsonObject : any) : FeedContent {
-        if (!jsonObject._id) {
+        Logger.debug("FeedContent -- jsonObject");
+        Logger.debug(jsonObject);
+        if (typeof(jsonObject._id) == "undefined") {
             throw new InfoException("A FeedContent object should have an ID.");
         }
-        if(!jsonObject._priority) {
+        if(typeof(jsonObject._priority) == "undefined") {
             throw new InfoException("A FeedContent object should have a priority.");
         }
-        if(!jsonObject._creationDate) {
+        if(typeof(jsonObject._creationDate) == "undefined") {
             throw new InfoException("A FeedContent object should have a creationDate.");
         }
-        if(!jsonObject._castingDate) {
+        if(typeof(jsonObject._castingDate) == "undefined") {
             throw new InfoException("A FeedContent object should have a castingDate.");
         }
-        if(!jsonObject._obsoleteDate) {
+        if(typeof(jsonObject._obsoleteDate) == "undefined") {
             throw new InfoException("A FeedContent object should have an obsoleteDate.");
         }
-        if(!jsonObject._durationToDisplay) {
+        if(typeof(jsonObject._durationToDisplay) == "undefined") {
             throw new InfoException("A FeedContent object should have a durationToDisplay.");
         }
-        if(!jsonObject._title) {
+        if(typeof(jsonObject._title) == "undefined") {
             throw new InfoException("A FeedContent object should have a title.");
         }
-        if(!jsonObject._description) {
+        if(typeof(jsonObject._description) == "undefined") {
             throw new InfoException("A FeedContent object should have a description.");
         }
-        if(!jsonObject._url) {
+        if(typeof(jsonObject._url) == "undefined") {
             throw new InfoException("A FeedContent object should have an url.");
         }
-        if(!jsonObject._language) {
+        if(typeof(jsonObject._language) == "undefined") {
             throw new InfoException("A FeedContent object should have a language.");
         }
-        if(!jsonObject._logo) {
+        if(typeof(jsonObject._logo) == "undefined") {
             throw new InfoException("A FeedContent object should have a logo.");
         }
-        if(!jsonObject._feedNodes) {
+        if(typeof(jsonObject._feedNodes) == "undefined") {
             throw new InfoException("A FeedContent object should have feedNodes.");
         }
-        var fc : FeedContent = new FeedContent(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._castingDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay,
+        var fc : FeedContent = new FeedContent(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate,
                                 jsonObject._title, jsonObject._description, jsonObject._url, jsonObject._language, jsonObject._logo);
 
         for(var i = 0; i < jsonObject._feedNodes.length; i++) {
