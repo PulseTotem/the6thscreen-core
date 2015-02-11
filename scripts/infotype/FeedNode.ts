@@ -43,6 +43,15 @@ class FeedNode extends Info {
     private _url : string;
 
     /**
+     * FeedNode's media url.
+     *
+     * @property _mediaUrl
+     * @type string
+     * @private
+     */
+    private _mediaUrl : string;
+
+    /**
      * FeedNode's author.
      *
      * @property _author
@@ -57,13 +66,14 @@ class FeedNode extends Info {
      * @constructor
      */
     constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10000, castingDate : Date = null,
-                title : string = null, description : string = null, summary : string = null, url : string = null, author : string = null) {
+                title : string = null, description : string = null, summary : string = null, url : string = null, author : string = null, mediaUrl : string = null) {
         super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
         this._title = title;
         this._description = description;
         this._summary = summary;
         this._url = url;
         this._author = author;
+        this._mediaUrl = mediaUrl;
     }
 
     /**
@@ -147,6 +157,26 @@ class FeedNode extends Info {
     }
 
     /**
+     * Returns FeedNode's media url.
+     *
+     * @method getMediaUrl
+     * @returns {string} The FeedNode's media url.
+     */
+    getMediaUrl() : string {
+        return this._mediaUrl;
+    }
+
+    /**
+     * Set the FeedNode's media url.
+     *
+     * @method setMediaUrl
+     * @param {string} url - The new FeedNode's media url.
+     */
+    setMediaUrl(url : string) {
+        this._mediaUrl = url;
+    }
+
+    /**
      * Returns FeedNode's author.
      *
      * @method getAuthor
@@ -209,7 +239,7 @@ class FeedNode extends Info {
             throw new InfoException("A FeedNode object should have an author.");
         }
         var fn : FeedNode = new FeedNode(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate,
-            jsonObject._title, jsonObject._description, jsonObject._summary, jsonObject._url, jsonObject._author);
+            jsonObject._title, jsonObject._description, jsonObject._summary, jsonObject._url, jsonObject._author, jsonObject._mediaUrl);
 
         return fn;
     }
