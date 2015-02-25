@@ -57,8 +57,6 @@ class DiscountsList extends Info {
      * @return {DiscountsList} The InfoType instance.
      */
     static fromJSONObject(jsonObject : any) : DiscountsList {
-        Logger.debug("DiscountsList -- jsonObject");
-        Logger.debug(jsonObject);
         if (typeof(jsonObject._id) == "undefined") {
             throw new InfoException("A DiscountsList object should have an ID.");
         }
