@@ -207,8 +207,6 @@ class FeedContent extends Info {
      * @return {FeedContent} The InfoType instance.
      */
     static fromJSONObject(jsonObject : any) : FeedContent {
-        Logger.debug("FeedContent -- jsonObject");
-        Logger.debug(jsonObject);
         if (typeof(jsonObject._id) == "undefined") {
             throw new InfoException("A FeedContent object should have an ID.");
         }
