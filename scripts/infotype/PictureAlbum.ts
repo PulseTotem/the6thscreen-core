@@ -75,9 +75,11 @@ class PictureAlbum extends Info {
 		if(typeof(jsonObject._durationToDisplay) == "undefined") {
 			throw new InfoException("A PictureAlbum object should have a durationToDisplay.");
 		}
+
 		if(typeof(jsonObject._pictures) == "undefined") {
 			throw new InfoException("A PictureAlbum object should have pictures.");
 		}
+
 		var pa : PictureAlbum = new PictureAlbum(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate);
 
 		for(var i = 0; i < jsonObject._pictures.length; i++) {

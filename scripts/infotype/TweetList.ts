@@ -75,9 +75,11 @@ class TweetList extends Info {
 		if(typeof(jsonObject._durationToDisplay) == "undefined") {
 			throw new InfoException("A TweetList object should have a durationToDisplay.");
 		}
+
 		if(typeof(jsonObject._tweets) == "undefined") {
 			throw new InfoException("A TweetList object should have tweets.");
 		}
+
 		var tl : TweetList = new TweetList(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate);
 
 		for(var i = 0; i < jsonObject._tweets.length; i++) {

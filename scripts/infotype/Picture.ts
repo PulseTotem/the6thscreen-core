@@ -293,13 +293,13 @@ class Picture extends Info {
 	}
 
 	/**
-	 * Set the Picture's tags.
+	 * Added a Tag to a Picture.
 	 *
-	 * @method setTags
-	 * @param {Array<Tag>} tags - The new Picture's tags.
+	 * @method addTag
+	 * @param {Tag} tag - The tag to add.
 	 */
-	setTags(tags : Array<Tag>) {
-		this._tags = tags;
+	addTag(tag : Tag) {
+		this._tags.push(tag);
 	}
 
 	/**
@@ -381,8 +381,25 @@ class Picture extends Info {
 			throw new InfoException("A Picture object should have an owner.");
 		}
 
-		var p : Picture = new Picture(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate,
-			jsonObject._title, jsonObject._description, jsonObject._original, jsonObject._small, jsonObject._medium, jsonObject._large, jsonObject._thumb, jsonObject._orientation, jsonObject._tags, jsonObject._owner);
+		var p : Picture = new Picture(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate);
+
+		p.setTitle(jsonObject._title);
+		p.setDescription(jsonObject._description);
+		p.setOriginal(PictureURL.fromJSONObject(jsonObject._original));
+		p.setSmall(PictureURL.fromJSONObject(jsonObject._small));
+		p.setMedium(PictureURL.fromJSONObject(jsonObject._medium));
+		p.setLarge(PictureURL.fromJSONObject(jsonObject._large));
+		p.setThumb(PictureURL.fromJSONObject(jsonObject._thumb));
+		p.setOrientation(jsonObject._orientation);
+
+		for(var i = 0; i < jsonObject._tags.length; i++) {
+			var tDesc = jsonObject._tags[i];
+			var t : Tag = Tag.fromJSONObject(tDesc);
+			p.addTag(t);
+		}
+
+		p.setOwner(User.fromJSONObject(jsonObject._owner));
+
 
 		return p;
 	}

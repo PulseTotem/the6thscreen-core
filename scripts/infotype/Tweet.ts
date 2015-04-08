@@ -314,8 +314,26 @@ class Tweet extends Info {
 			throw new InfoException("A Tweet object should have hashtags.");
 		}
 
-		var t : Tweet = new Tweet(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate,
-			jsonObject._owner, jsonObject._message, jsonObject._favoriteCount, jsonObject._retweetCount, jsonObject._lang, jsonObject._sensitive, jsonObject._pictures, jsonObject._hashtags);
+		var t : Tweet = new Tweet(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate);
+
+		t.setOwner(User.fromJSONObject(jsonObject._owner));
+		t.setMessage(jsonObject._message);
+		t.setFavoriteCount(jsonObject._favoriteCount);
+		t.setRetweetCount(jsonObject._retweetCount);
+		t.setLang(jsonObject._lang);
+		t.setSensitive(jsonObject._sensitive);
+
+		for(var i = 0; i < jsonObject._pictures.length; i++) {
+			var pDesc = jsonObject._pictures[i];
+			var p : Picture = Picture.fromJSONObject(pDesc);
+			t.addPicture(p);
+		}
+
+		for(var j = 0; j < jsonObject._hashtags.length; j++) {
+			var htDesc = jsonObject._hashtags[j];
+			var ht : Tag = Tag.fromJSONObject(htDesc);
+			t.addHashtag(ht);
+		}
 
 		return t;
 	}
