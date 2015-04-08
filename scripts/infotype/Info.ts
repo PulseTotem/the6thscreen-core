@@ -67,4 +67,28 @@ class Info {
     setDurationToDisplay(durationToDisplay : number) {
         this._durationToDisplay = durationToDisplay;
     }
+
+	/**
+	 * Return an array of Info instance from a JSON Array.
+	 *
+	 * @method fromJSONArray
+	 * @static
+	 * @param {JSONArray} json - The JSON Array
+	 * @param {Info Class} infoClass - The Info Class contained in JSON Array
+	 */
+	static fromJSONArray(jsonArray : any, infoClass : any) {
+		var newListInfos = new Array();
+
+		for(var iInfo in jsonArray) {
+			try {
+				var infoDesc = jsonArray[iInfo];
+				var infoInstance = infoClass.fromJSONObject(infoDesc);
+				newListInfos.push(infoInstance);
+			} catch(e) {
+				Logger.error(e.message);
+			}
+		}
+
+		return newListInfos;
+	}
 }
