@@ -299,13 +299,14 @@ class Tweet extends Info {
 			throw new InfoException("A Tweet object should have a favorite count.");
 		}
 		if(typeof(jsonObject._retweetCount) == "undefined") {
+			Logger.debug(jsonObject);
 			throw new InfoException("A Tweet object should have a retweet count.");
 		}
 		if(typeof(jsonObject._lang) == "undefined") {
-			throw new InfoException("A Tweet object should have a retweet count.");
+			throw new InfoException("A Tweet object should have a lang.");
 		}
 		if(typeof(jsonObject._sensitive) == "undefined") {
-			throw new InfoException("A Tweet object should have a retweet count.");
+			throw new InfoException("A Tweet object should have a sensitive.");
 		}
 		if(typeof(jsonObject._pictures) == "undefined") {
 			throw new InfoException("A Tweet object should have pictures.");

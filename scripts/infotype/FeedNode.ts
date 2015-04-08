@@ -223,6 +223,7 @@ class FeedNode extends Info {
         if(typeof(jsonObject._durationToDisplay) == "undefined") {
             throw new InfoException("A FeedNode object should have a durationToDisplay.");
         }
+
         if(typeof(jsonObject._title) == "undefined") {
             throw new InfoException("A FeedNode object should have a title.");
         }
