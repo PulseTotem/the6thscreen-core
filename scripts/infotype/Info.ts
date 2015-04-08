@@ -85,7 +85,7 @@ class Info {
 				var infoInstance = infoClass.fromJSONObject(infoDesc);
 				newListInfos.push(infoInstance);
 			} catch(e) {
-				Logger.error(e.message);
+				Logger.error(e);
 			}
 		}
 
