@@ -5,6 +5,7 @@
 /// <reference path="./Info.ts" />
 /// <reference path="./PictureURL.ts" />
 /// <reference path="./Tag.ts" />
+/// <reference path="./User.ts" />
 /// <reference path="./exceptions/InfoException.ts" />
 
 class Picture extends Info {
@@ -91,13 +92,22 @@ class Picture extends Info {
 	private _tags : Array<Tag>;
 
 	/**
+	 * Picture's owner.
+	 *
+	 * @property _owner
+	 * @type User
+	 * @private
+	 */
+	private _owner : User;
+
+	/**
 	 * Constructor.
 	 *
 	 * @constructor
 	 */
 	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10000, castingDate : Date = null,
 				title : string = null, description : string = null, original : PictureURL = null, small : PictureURL = null, medium : PictureURL = null,
-				large : PictureURL = null, thumb : PictureURL = null, orientation : string = null, tags : Array<Tag> = new Array<Tag>()) {
+				large : PictureURL = null, thumb : PictureURL = null, orientation : string = null, tags : Array<Tag> = new Array<Tag>(), owner : User = null) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
 
 		this._title = title;
@@ -109,6 +119,7 @@ class Picture extends Info {
 		this._thumb = thumb;
 		this._orientation = orientation;
 		this._tags = tags;
+		this._owner = owner;
 	}
 
 	/**
@@ -292,6 +303,26 @@ class Picture extends Info {
 	}
 
 	/**
+	 * Returns Picture's owner.
+	 *
+	 * @method getOwner
+	 * @returns {User} The Picture's owner.
+	 */
+	getOwner() : User {
+		return this._owner;
+	}
+
+	/**
+	 * Set the Picture's owner.
+	 *
+	 * @method setOwner
+	 * @param {User} owner - The new Picture's owner.
+	 */
+	setOwner(owner : User) {
+		this._owner = owner;
+	}
+
+	/**
 	 * Return a Picture instance from a JSON Object.
 	 *
 	 * @method fromJSONObject
@@ -346,9 +377,12 @@ class Picture extends Info {
 		if(typeof(jsonObject._tags) == "undefined") {
 			throw new InfoException("A Picture object should have tags.");
 		}
+		if(typeof(jsonObject._owner) == "undefined") {
+			throw new InfoException("A Picture object should have an owner.");
+		}
 
 		var p : Picture = new Picture(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate,
-			jsonObject._title, jsonObject._description, jsonObject._original, jsonObject._small, jsonObject._medium, jsonObject._large, jsonObject._thumb, jsonObject._orientation, jsonObject._tags);
+			jsonObject._title, jsonObject._description, jsonObject._original, jsonObject._small, jsonObject._medium, jsonObject._large, jsonObject._thumb, jsonObject._orientation, jsonObject._tags, jsonObject._owner);
 
 		return p;
 	}

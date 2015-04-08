@@ -3,6 +3,7 @@
  */
 
 /// <reference path="./Info.ts" />
+/// <reference path="./exceptions/InfoException.ts" />
 
 class Tag extends Info {
 
