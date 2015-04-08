@@ -3,6 +3,7 @@
  */
 
 /// <reference path="./Info.ts" />
+/// <reference path="./Picture.ts" />
 
 class Tweet extends Info {
 
@@ -16,15 +17,25 @@ class Tweet extends Info {
 	private _message : string;
 
 	/**
+	 * Tweet's pictures.
+	 *
+	 * @property _pictures
+	 * @type Array<Picture>
+	 * @private
+	 */
+	private _pictures : Array<Picture>;
+
+	/**
 	 * Constructor.
 	 *
 	 * @constructor
 	 */
 	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10000, castingDate : Date = null,
-				message : string = null) {
+				message : string = null, pictures : Array<Picture> = new Array<Picture>()) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
 
 		this._message = message;
+		this._pictures = pictures;
 	}
 
 	/**
