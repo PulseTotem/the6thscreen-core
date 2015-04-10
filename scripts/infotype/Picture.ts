@@ -386,10 +386,23 @@ class Picture extends Info {
 		p.setTitle(jsonObject._title);
 		p.setDescription(jsonObject._description);
 		p.setOriginal(PictureURL.fromJSONObject(jsonObject._original));
-		p.setSmall(PictureURL.fromJSONObject(jsonObject._small));
-		p.setMedium(PictureURL.fromJSONObject(jsonObject._medium));
-		p.setLarge(PictureURL.fromJSONObject(jsonObject._large));
-		p.setThumb(PictureURL.fromJSONObject(jsonObject._thumb));
+
+		if (jsonObject._small != null) {
+			p.setSmall(PictureURL.fromJSONObject(jsonObject._small));
+		}
+
+		if (jsonObject._medium != null) {
+			p.setMedium(PictureURL.fromJSONObject(jsonObject._medium));
+		}
+
+		if (jsonObject._large != null) {
+			p.setLarge(PictureURL.fromJSONObject(jsonObject._large));
+		}
+
+		if (jsonObject._thumb != null) {
+			p.setThumb(PictureURL.fromJSONObject(jsonObject._thumb));
+		}
+
 		p.setOrientation(jsonObject._orientation);
 
 		for(var i = 0; i < jsonObject._tags.length; i++) {
@@ -398,7 +411,9 @@ class Picture extends Info {
 			p.addTag(t);
 		}
 
-		p.setOwner(User.fromJSONObject(jsonObject._owner));
+		if (jsonObject._owner != null) {
+			p.setOwner(User.fromJSONObject(jsonObject._owner));
+		}
 
 
 		return p;
