@@ -3,18 +3,18 @@
  */
 
 /// <reference path="./Info.ts" />
-/// <reference path="./Event.ts" />
+/// <reference path="./CityEvent.ts" />
 /// <reference path="./exceptions/InfoException.ts" />
 
 class EventList extends Info {
 
-	private _events : Array<Event>;
+	private _events : Array<CityEvent>;
 
-	public events() : Array<Event> {
+	public getEvents() : Array<CityEvent> {
 		return this._events;
 	}
 
-	public addEvent(e : Event) {
+	public addEvent(e : CityEvent) {
 		this._events.push(e);
 	}
 
@@ -24,7 +24,7 @@ class EventList extends Info {
 	 * @constructor
 	 */
 	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10000, castingDate : Date = null,
-	            events : Array<Event> = new Array<Event>()) {
+	            events : Array<CityEvent> = new Array<CityEvent>()) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
 		this._events = events;
 	}
@@ -57,7 +57,7 @@ class EventList extends Info {
 
 		for(var i = 0; i < jsonObject._events.length; i++) {
 			var pDesc = jsonObject._events[i];
-			var p : Event = Event.fromJSONObject(pDesc);
+			var p : CityEvent = CityEvent.fromJSONObject(pDesc);
 			el.addEvent(p);
 		}
 

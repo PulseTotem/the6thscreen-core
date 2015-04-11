@@ -5,7 +5,7 @@
 /// <reference path="./Info.ts" />
 /// <reference path="./exceptions/InfoException.ts" />
 
-class Event extends Info {
+class CityEvent extends Info {
 
 	private _start : Date;
 	private _end : Date;
@@ -50,7 +50,7 @@ class Event extends Info {
 		this._name = name;
 	}
 
-	static fromJSONObject(jsonObject : any) : Event {
+	static fromJSONObject(jsonObject : any) : CityEvent {
 		if (typeof(jsonObject._id) == "undefined") {
 			throw new InfoException("A Picture object should have an ID.");
 		}
@@ -80,7 +80,7 @@ class Event extends Info {
 			throw new InfoException("A Picture object should have an end.");
 		}
 
-		var e : Event = new Event(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate);
+		var e : CityEvent = new CityEvent(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate);
 		e.setName(jsonObject._name);
 		e.setStart(jsonObject._start);
 		e.setEnd(jsonObject._end);
