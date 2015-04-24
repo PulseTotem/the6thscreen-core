@@ -385,7 +385,10 @@ class Picture extends Info {
 
 		p.setTitle(jsonObject._title);
 		p.setDescription(jsonObject._description);
-		p.setOriginal(PictureURL.fromJSONObject(jsonObject._original));
+
+		if (jsonObject._original != null) {
+			p.setOriginal(PictureURL.fromJSONObject(jsonObject._original));
+		}
 
 		if (jsonObject._small != null) {
 			p.setSmall(PictureURL.fromJSONObject(jsonObject._small));
