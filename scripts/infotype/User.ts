@@ -49,7 +49,7 @@ class User extends Info {
 	 *
 	 * @constructor
 	 */
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10000, castingDate : Date = null,
+	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
 				username : string = null, realname : string = null, location : string = null, profilPicture : string = null) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
 

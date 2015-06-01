@@ -86,7 +86,7 @@ class Tweet extends Info {
 	 *
 	 * @constructor
 	 */
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10000, castingDate : Date = null,
+	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
 				owner : User = null, message : string = null, favoriteCount : number = 0, retweetCount : number = 0, lang : string = null, sensitive : boolean = false,
 				pictures : Array<Picture> = new Array<Picture>(), hashtags : Array<Tag> = new Array<Tag>()) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);

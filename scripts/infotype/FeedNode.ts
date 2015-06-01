@@ -65,7 +65,7 @@ class FeedNode extends Info {
      *
      * @constructor
      */
-    constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10000, castingDate : Date = null,
+    constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
                 title : string = null, description : string = null, summary : string = null, url : string = null, author : string = null, mediaUrl : string = null) {
         super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
         this._title = title;

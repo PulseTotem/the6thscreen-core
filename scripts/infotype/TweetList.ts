@@ -22,7 +22,7 @@ class TweetList extends Info {
 	 *
 	 * @constructor
 	 */
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10000, castingDate : Date = null,
+	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
 				tweets : Array<Tweet> = new Array<Tweet>()) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
 		this._tweets = tweets;
