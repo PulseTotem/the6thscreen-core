@@ -3,6 +3,7 @@
  */
 
 /// <reference path="./Info.ts" />
+/// <reference path="./VideoType.ts" />
 /// <reference path="./exceptions/InfoException.ts" />
 
 class VideoURL extends Info {
@@ -17,15 +18,25 @@ class VideoURL extends Info {
 	private _url : string;
 
 	/**
+	 * VdeoURL's type
+	 *
+	 * @property _type
+	 * @type VideoType
+	 * @private
+	 */
+	private _type : VideoType;
+
+	/**
 	 * Constructor.
 	 *
 	 * @constructor
 	 */
 	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10000, castingDate : Date = null,
-	            url : string = null) {
+	            url : string = null, type : VideoType = null) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
 
 		this._url = url;
+		this._type = type;
 	}
 
 	/**
@@ -46,6 +57,24 @@ class VideoURL extends Info {
 	 */
 	setURL(url : string) {
 		this._url = url;
+	}
+
+	/**
+	 * Returns VideoURL's type
+	 *
+	 * @method getType
+	 * @returns {VideoType} The type of the video
+	 */
+	getType() : VideoType {
+		return this._type;
+	}
+
+	/**
+	 * Set the VideoURL's type
+	 * @param {VideoType} type  - The new VideoURL's type
+	 */
+	setType(type : VideoType) {
+		this._type = type;
 	}
 
 	/**
@@ -79,9 +108,12 @@ class VideoURL extends Info {
 		if(typeof(jsonObject._url) == "undefined") {
 			throw new InfoException("A VideoURL object should have an url.");
 		}
+		if(typeof(jsonObject._type) == "undefined") {
+			throw new InfoException("A VideoURL object should have a type.");
+		}
 
 		var v : VideoURL = new VideoURL(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate,
-			jsonObject._url);
+			jsonObject._url, jsonObject._type);
 
 		return v;
 	}

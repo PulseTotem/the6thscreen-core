@@ -25,7 +25,7 @@ class VideoPlaylist extends Info {
 	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10000, castingDate : Date = null) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
 
-		this._videos = new Array<VideoURL>;
+		this._videos = new Array<VideoURL>();
 	}
 
 	/**
@@ -71,6 +71,12 @@ class VideoPlaylist extends Info {
 		}
 
 		var v : VideoPlaylist = new VideoPlaylist(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate);
+
+		for(var i = 0; i < jsonObject._videos.length; i++) {
+			var videoDesc = jsonObject._videos[i];
+			var video : VideoURL = VideoURL.fromJSONObject(videoDesc);
+			v.addVideo(video);
+		}
 
 		return v;
 	}
