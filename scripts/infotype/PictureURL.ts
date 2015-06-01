@@ -39,7 +39,7 @@ class PictureURL extends Info {
 	 *
 	 * @constructor
 	 */
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10000, castingDate : Date = null,
+	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
 				url : string = null, width : number = 0, height : number = 0) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
 

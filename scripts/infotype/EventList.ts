@@ -23,7 +23,7 @@ class EventList extends Info {
 	 *
 	 * @constructor
 	 */
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10000, castingDate : Date = null,
+	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
 	            events : Array<CityEvent> = new Array<CityEvent>()) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
 		this._events = events;

@@ -11,7 +11,7 @@ class Info {
 	private _obsoleteDate : Date;
 	private _durationToDisplay : number;
 
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10000, castingDate : Date = null) {
+	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null) {
 		this._id = id;
         this._priority = priority;
         this._creationDate = creationDate;
