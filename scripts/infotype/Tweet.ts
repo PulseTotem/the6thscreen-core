@@ -82,21 +82,31 @@ class Tweet extends Info {
 	private _hashtags : Array<Tag>;
 
 	/**
+	 * Tweet's Original tweet. This property should be used if it is a retweet.
+	 *
+	 * @property _originalTweet
+	 * @type Tweet
+	 * @private
+	 */
+	private _originalTweet : Tweet;
+
+	/**
 	 * Constructor.
 	 *
 	 * @constructor
 	 */
 	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
 				owner : User = null, message : string = null, favoriteCount : number = 0, retweetCount : number = 0, lang : string = null, sensitive : boolean = false,
-				pictures : Array<Picture> = new Array<Picture>(), hashtags : Array<Tag> = new Array<Tag>()) {
+				pictures : Array<Picture> = new Array<Picture>(), hashtags : Array<Tag> = new Array<Tag>(), originalTweet : Tweet = null) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
 
-		this._owner = owner;
-		this._message = message;
-		this._favoriteCount = favoriteCount;
-		this._retweetCount = retweetCount;
-		this._lang = lang;
-		this._sensitive = sensitive;
+		this.setOwner(owner);
+		this.setMessage(message);
+		this.setFavoriteCount(favoriteCount);
+		this.setRetweetCount(retweetCount);
+		this.setLang(lang);
+		this.setSensitive(sensitive);
+		this.setOriginalTweet(originalTweet);
 		this._pictures = pictures;
 		this._hashtags = hashtags;
 	}
@@ -262,6 +272,26 @@ class Tweet extends Info {
 	}
 
 	/**
+	 * Returns Tweet's original tweet.
+	 *
+	 * @method getOriginalTweet
+	 * @returns {Tweet} The Tweet's original tweet.
+	 */
+	getOriginalTweet() : Tweet {
+		return this._originalTweet;
+	}
+
+	/**
+	 * Set the Tweet's original tweet.
+	 *
+	 * @method setOriginalTweet
+	 * @param {Tweet} originalTweet - The new Tweet's originalTweet.
+	 */
+	setOriginalTweet(originalTweet : Tweet) {
+		this._originalTweet = originalTweet;
+	}
+
+	/**
 	 * Return a Tweet instance from a JSON Object.
 	 *
 	 * @method fromJSONObject
@@ -305,6 +335,9 @@ class Tweet extends Info {
 		if(typeof(jsonObject._lang) == "undefined") {
 			throw new InfoException("A Tweet object should have a lang.");
 		}
+		if(typeof(jsonObject._originalTweet) == "undefined") {
+			throw new InfoException("A Tweet object should have a original tweet value.");
+		}
 		if(typeof(jsonObject._sensitive) == "undefined") {
 			throw new InfoException("A Tweet object should have a sensitive.");
 		}
@@ -323,6 +356,7 @@ class Tweet extends Info {
 		t.setRetweetCount(jsonObject._retweetCount);
 		t.setLang(jsonObject._lang);
 		t.setSensitive(jsonObject._sensitive);
+		t.setOriginalTweet(jsonObject._originalTweet);
 
 		for(var i = 0; i < jsonObject._pictures.length; i++) {
 			var pDesc = jsonObject._pictures[i];
