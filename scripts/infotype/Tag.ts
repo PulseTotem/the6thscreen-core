@@ -17,15 +17,25 @@ class Tag extends Info {
 	private _name : string;
 
 	/**
+	 * Tag's popularity.
+	 *
+	 * @property _popularity
+	 * @type number
+	 * @private
+	 */
+	private _popularity : number;
+
+	/**
 	 * Constructor.
 	 *
 	 * @constructor
 	 */
 	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
-				name : string = null) {
+				name : string = null, popularity : number = 0) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
 
 		this._name = name;
+		this._popularity = popularity;
 	}
 
 	/**
@@ -46,6 +56,26 @@ class Tag extends Info {
 	 */
 	setName(name : string) {
 		this._name = name;
+	}
+
+	/**
+	 * Returns Tag's popularity.
+	 *
+	 * @method getPopularity
+	 * @returns {number} The Tag's popularity.
+	 */
+	getPopularity() : number {
+		return this._popularity;
+	}
+
+	/**
+	 * Set the Tag's popularity.
+	 *
+	 * @method setPopularity
+	 * @param {number} popularity - The new Tag's popularity.
+	 */
+	setPopularity(popularity : number) {
+		this._popularity = popularity;
 	}
 
 	/**
@@ -80,8 +110,12 @@ class Tag extends Info {
 			throw new InfoException("A Tag object should have a name.");
 		}
 
+		if(typeof(jsonObject._popularity) == "undefined") {
+			throw new InfoException("A Tag object should have a popularity.");
+		}
+
 		var t : Tag = new Tag(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate,
-			jsonObject._name);
+			jsonObject._name, jsonObject._popularity);
 
 		return t;
 	}
