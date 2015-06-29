@@ -329,7 +329,6 @@ class Tweet extends Info {
 			throw new InfoException("A Tweet object should have a favorite count.");
 		}
 		if(typeof(jsonObject._retweetCount) == "undefined") {
-			Logger.debug(jsonObject);
 			throw new InfoException("A Tweet object should have a retweet count.");
 		}
 		if(typeof(jsonObject._lang) == "undefined") {
