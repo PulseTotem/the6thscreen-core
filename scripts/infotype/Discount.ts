@@ -280,4 +280,21 @@ class Discount extends Info {
 
         return d;
     }
+
+	/**
+	 * Check if 'this' is equal to info in param.
+	 *
+	 * @method equals
+	 * @param {Info} info - Info to update.
+	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
+	 */
+	equals(info : Discount) : boolean {
+		return this.getProductBarCode() == info.getProductBarCode() &&
+				this.getProductDescription() == info.getProductDescription() &&
+				this.getProductId() == info.getProductId() &&
+				this.getProductImage() == info.getProductImage() &&
+				this.getProductName() == info.getProductName() &&
+				this.getType() == info.getType() &&
+				this.getValue() == info.getValue();
+	}
 }

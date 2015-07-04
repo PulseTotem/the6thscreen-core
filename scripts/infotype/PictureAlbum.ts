@@ -90,4 +90,33 @@ class PictureAlbum extends Info {
 
 		return pa;
 	}
+
+	/**
+	 * Check if 'this' is equal to info in param.
+	 *
+	 * @method equals
+	 * @param {Info} info - Info to update.
+	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
+	 */
+	equals(info : PictureAlbum) : boolean {
+		if(this.getPictures().length != info.getPictures().length) {
+			return false;
+		} else {
+			var equalStatus = true;
+
+			this.getPictures().forEach(function (picture : Picture) {
+				var existEqual = false;
+
+				info.getPictures().forEach(function(otherPicture : Picture) {
+					if(!existEqual) {
+						existEqual = picture.equals(otherPicture);
+					}
+				});
+
+				equalStatus = equalStatus && existEqual;
+			});
+
+			return equalStatus;
+		}
+	}
 }

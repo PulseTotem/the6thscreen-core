@@ -90,4 +90,33 @@ class TagList extends Info {
 
 		return cl;
 	}
+
+	/**
+	 * Check if 'this' is equal to info in param.
+	 *
+	 * @method equals
+	 * @param {Info} info - Info to update.
+	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
+	 */
+	equals(info : TagList) : boolean {
+		if(this.getTags().length != info.getTags().length) {
+			return false;
+		} else {
+			var equalStatus = true;
+
+			this.getTags().forEach(function (tag : Tag) {
+				var existEqual = false;
+
+				info.getTags().forEach(function(otherTag : Tag) {
+					if(!existEqual) {
+						existEqual = tag.equals(otherTag);
+					}
+				});
+
+				equalStatus = equalStatus && existEqual;
+			});
+
+			return equalStatus;
+		}
+	}
 }

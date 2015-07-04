@@ -244,4 +244,20 @@ class FeedNode extends Info {
 
         return fn;
     }
+
+	/**
+	 * Check if 'this' is equal to info in param.
+	 *
+	 * @method equals
+	 * @param {Info} info - Info to update.
+	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
+	 */
+	equals(info : FeedNode) : boolean {
+		return this.getAuthor() == info.getAuthor() &&
+				this.getDescription() == info.getDescription() &&
+				this.getMediaUrl() == info.getMediaUrl() &&
+				this.getSummary() ==  info.getSummary() &&
+				this.getTitle() == info.getTitle() &&
+				this.getUrl() == info.getUrl();
+	}
 }

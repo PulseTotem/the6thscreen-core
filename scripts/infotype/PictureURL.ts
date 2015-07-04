@@ -153,4 +153,17 @@ class PictureURL extends Info {
 
 		return p;
 	}
+
+	/**
+	 * Check if 'this' is equal to info in param.
+	 *
+	 * @method equals
+	 * @param {Info} info - Info to update.
+	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
+	 */
+	equals(info : PictureURL) : boolean {
+		return this.getHeight() == info.getHeight() &&
+				this.getURL() == info.getURL() &&
+				this.getWidth() == info.getWidth();
+	}
 }

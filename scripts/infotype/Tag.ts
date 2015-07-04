@@ -119,4 +119,16 @@ class Tag extends Info {
 
 		return t;
 	}
+
+	/**
+	 * Check if 'this' is equal to info in param.
+	 *
+	 * @method equals
+	 * @param {Info} info - Info to update.
+	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
+	 */
+	equals(info : Tag) : boolean {
+		return this.getName() == info.getName() &&
+				this.getPopularity() == info.getPopularity();
+	}
 }

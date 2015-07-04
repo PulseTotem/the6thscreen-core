@@ -371,4 +371,75 @@ class Tweet extends Info {
 
 		return t;
 	}
+
+	/**
+	 * Check if 'this' is equal to info in param.
+	 *
+	 * @method equals
+	 * @param {Info} info - Info to update.
+	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
+	 */
+	equals(info : Tweet) : boolean {
+		var firstCheck = this.getFavoriteCount() == info.getFavoriteCount() &&
+				this.getLang() == info.getLang() &&
+				this.getMessage() == info.getMessage() &&
+				this.getRetweetCount() == info.getRetweetCount() &&
+				this.getSensitive() == info.getSensitive();
+
+		if(firstCheck) {
+			var equalStatus = true;
+
+			if(this.getOwner() != null && info.getOwner() != null) {
+				equalStatus = equalStatus && this.getOwner().equals(info.getOwner());
+			} else {
+				if(this.getOwner() != null || info.getOwner() != null) {
+					return false;
+				}
+			}
+
+			if(this.getOriginalTweet() != null && info.getOriginalTweet() != null) {
+				equalStatus = equalStatus && this.getOriginalTweet().equals(info.getOriginalTweet());
+			} else {
+				if(this.getOriginalTweet() != null || info.getOriginalTweet() != null) {
+					return false;
+				}
+			}
+
+			if(this.getHashtags().length != info.getHashtags().length) {
+				return false;
+			} else {
+				this.getHashtags().forEach(function (tag:Tag) {
+					var existEqual = false;
+
+					info.getHashtags().forEach(function (otherTag:Tag) {
+						if (!existEqual) {
+							existEqual = tag.equals(otherTag);
+						}
+					});
+
+					equalStatus = equalStatus && existEqual;
+				});
+			}
+
+			if(this.getPictures().length != info.getPictures().length) {
+				return false;
+			} else {
+				this.getPictures().forEach(function (picture:Picture) {
+					var existEqual = false;
+
+					info.getPictures().forEach(function (otherPicture:Picture) {
+						if (!existEqual) {
+							existEqual = picture.equals(otherPicture);
+						}
+					});
+
+					equalStatus = equalStatus && existEqual;
+				});
+			}
+
+			return equalStatus;
+		} else {
+			return false;
+		}
+	}
 }

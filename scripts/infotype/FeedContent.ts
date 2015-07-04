@@ -254,4 +254,43 @@ class FeedContent extends Info {
 
         return fc;
     }
+
+	/**
+	 * Check if 'this' is equal to info in param.
+	 *
+	 * @method equals
+	 * @param {Info} info - Info to update.
+	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
+	 */
+	equals(info : FeedContent) : boolean {
+		var firstCheck = this.getDescription() == info.getDescription() &&
+				this.getLanguage() == info.getLanguage() &&
+				this.getLogo() == info.getLogo() &&
+				this.getTitle() == info.getTitle() &&
+				this.getUrl() == info.getUrl();
+
+		if(firstCheck) {
+			if (this.getFeedNodes().length != info.getFeedNodes().length) {
+				return false;
+			} else {
+				var equalStatus = true;
+
+				this.getFeedNodes().forEach(function (fn:FeedNode) {
+					var existEqual = false;
+
+					info.getFeedNodes().forEach(function (otherFn:FeedNode) {
+						if (!existEqual) {
+							existEqual = fn.equals(otherFn);
+						}
+					});
+
+					equalStatus = equalStatus && existEqual;
+				});
+
+				return equalStatus;
+			}
+		} else {
+			return false;
+		}
+	}
 }

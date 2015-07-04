@@ -80,4 +80,33 @@ class VideoPlaylist extends Info {
 
 		return v;
 	}
+
+	/**
+	 * Check if 'this' is equal to info in param.
+	 *
+	 * @method equals
+	 * @param {Info} info - Info to update.
+	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
+	 */
+	equals(info : VideoPlaylist) : boolean {
+		if(this.getVideos().length != info.getVideos().length) {
+			return false;
+		} else {
+			var equalStatus = true;
+
+			this.getVideos().forEach(function (video : VideoURL) {
+				var existEqual = false;
+
+				info.getVideos().forEach(function(otherVideo : VideoURL) {
+					if(!existEqual) {
+						existEqual = video.equals(otherVideo);
+					}
+				});
+
+				equalStatus = equalStatus && existEqual;
+			});
+
+			return equalStatus;
+		}
+	}
 }

@@ -185,4 +185,18 @@ class User extends Info {
 
 		return u;
 	}
+
+	/**
+	 * Check if 'this' is equal to info in param.
+	 *
+	 * @method equals
+	 * @param {Info} info - Info to update.
+	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
+	 */
+	equals(info : User) : boolean {
+		return this.getLocation() == info.getLocation() &&
+				this.getProfilPicture() == info.getProfilPicture() &&
+				this.getRealname() == info.getRealname() &&
+				this.getUsername() == info.getUsername();
+	}
 }

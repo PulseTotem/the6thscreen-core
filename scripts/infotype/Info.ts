@@ -91,4 +91,16 @@ class Info {
 
 		return newListInfos;
 	}
+
+	/**
+	 * Check if 'this' is equal to info in param.
+	 *
+	 * @method equals
+	 * @param {Info} info - Info to update.
+	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
+	 */
+	equals(info : Info) : boolean {
+		Logger.error("Info - equals : Method need to be implemented.");
+		return false;
+	}
 }

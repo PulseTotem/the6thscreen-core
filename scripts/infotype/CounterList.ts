@@ -90,4 +90,33 @@ class CounterList extends Info {
 
 		return cl;
 	}
+
+	/**
+	 * Check if 'this' is equal to info in param.
+	 *
+	 * @method equals
+	 * @param {Info} info - Info to update.
+	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
+	 */
+	equals(info : CounterList) : boolean {
+		if(this.getCounters().length != info.getCounters().length) {
+			return false;
+		} else {
+			var equalStatus = true;
+
+			this.getCounters().forEach(function (counter : Counter) {
+				var existEqual = false;
+
+				info.getCounters().forEach(function(otherCounter : Counter) {
+					if(!existEqual) {
+						existEqual = counter.equals(otherCounter);
+					}
+				});
+
+				equalStatus = equalStatus && existEqual;
+			});
+
+			return equalStatus;
+		}
+	}
 }

@@ -90,4 +90,33 @@ class TweetList extends Info {
 
 		return tl;
 	}
+
+	/**
+	 * Check if 'this' is equal to info in param.
+	 *
+	 * @method equals
+	 * @param {Info} info - Info to update.
+	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
+	 */
+	equals(info : TweetList) : boolean {
+		if(this.getTweets().length != info.getTweets().length) {
+			return false;
+		} else {
+			var equalStatus = true;
+
+			this.getTweets().forEach(function (tweet : Tweet) {
+				var existEqual = false;
+
+				info.getTweets().forEach(function(otherTweet : Tweet) {
+					if(!existEqual) {
+						existEqual = tweet.equals(otherTweet);
+					}
+				});
+
+				equalStatus = equalStatus && existEqual;
+			});
+
+			return equalStatus;
+		}
+	}
 }

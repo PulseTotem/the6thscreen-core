@@ -421,4 +421,90 @@ class Picture extends Info {
 
 		return p;
 	}
+
+	/**
+	 * Check if 'this' is equal to info in param.
+	 *
+	 * @method equals
+	 * @param {Info} info - Info to update.
+	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
+	 */
+	equals(info : Picture) : boolean {
+		var firstCheck = this.getDescription() == info.getDescription() &&
+				this.getOrientation() == info.getOrientation() &&
+				this.getTitle() == info.getTitle();
+
+		if(firstCheck) {
+			var equalStatus = true;
+
+			if(this.getOriginal() != null && info.getOriginal() != null) {
+				equalStatus = equalStatus && this.getOriginal().equals(info.getOriginal());
+			} else {
+				if(this.getOriginal() != null || info.getOriginal() != null) {
+					return false;
+				}
+			}
+
+			if(this.getSmall() != null && info.getSmall() != null) {
+				equalStatus = equalStatus && this.getSmall().equals(info.getSmall());
+			} else {
+				if(this.getSmall() != null || info.getSmall() != null) {
+					return false;
+				}
+			}
+
+			if(this.getMedium() != null && info.getMedium() != null) {
+				equalStatus = equalStatus && this.getMedium().equals(info.getMedium());
+			} else {
+				if(this.getMedium() != null || info.getMedium() != null) {
+					return false;
+				}
+			}
+
+			if(this.getLarge() != null && info.getLarge() != null) {
+				equalStatus = equalStatus && this.getLarge().equals(info.getLarge());
+			} else {
+				if(this.getLarge() != null || info.getLarge() != null) {
+					return false;
+				}
+			}
+
+			if(this.getThumb() != null && info.getThumb() != null) {
+				equalStatus = equalStatus && this.getThumb().equals(info.getThumb());
+			} else {
+				if(this.getThumb() != null || info.getThumb() != null) {
+					return false;
+				}
+			}
+
+			if(this.getOwner() != null && info.getOwner() != null) {
+				equalStatus = equalStatus && this.getOwner().equals(info.getOwner());
+			} else {
+				if(this.getOwner() != null || info.getOwner() != null) {
+					return false;
+				}
+			}
+
+			if(this.getTags().length != info.getTags().length) {
+				return false;
+			} else {
+				this.getTags().forEach(function (tag:Tag) {
+					var existEqual = false;
+
+					info.getTags().forEach(function (otherTag:Tag) {
+						if (!existEqual) {
+							existEqual = tag.equals(otherTag);
+						}
+					});
+
+					equalStatus = equalStatus && existEqual;
+				});
+			}
+
+
+			return equalStatus;
+		} else {
+			return false;
+		}
+	}
 }

@@ -63,4 +63,33 @@ class EventList extends Info {
 
 		return el;
 	}
+
+	/**
+	 * Check if 'this' is equal to info in param.
+	 *
+	 * @method equals
+	 * @param {Info} info - Info to update.
+	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
+	 */
+	equals(info : EventList) : boolean {
+		if(this.getEvents().length != info.getEvents().length) {
+			return false;
+		} else {
+			var equalStatus = true;
+
+			this.getEvents().forEach(function (event : CityEvent) {
+				var existEqual = false;
+
+				info.getEvents().forEach(function(otherEvent : CityEvent) {
+					if(!existEqual) {
+						existEqual = event.equals(otherEvent);
+					}
+				});
+
+				equalStatus = equalStatus && existEqual;
+			});
+
+			return equalStatus;
+		}
+	}
 }

@@ -88,4 +88,33 @@ class DiscountsList extends Info {
 
         return dl;
     }
+
+	/**
+	 * Check if 'this' is equal to info in param.
+	 *
+	 * @method equals
+	 * @param {Info} info - Info to update.
+	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
+	 */
+	equals(info : DiscountsList) : boolean {
+		if(this.getDiscounts().length != info.getDiscounts().length) {
+			return false;
+		} else {
+			var equalStatus = true;
+
+			this.getDiscounts().forEach(function (discount : Discount) {
+				var existEqual = false;
+
+				info.getDiscounts().forEach(function(otherDiscount : Discount) {
+					if(!existEqual) {
+						existEqual = discount.equals(otherDiscount);
+					}
+				});
+
+				equalStatus = equalStatus && existEqual;
+			});
+
+			return equalStatus;
+		}
+	}
 }

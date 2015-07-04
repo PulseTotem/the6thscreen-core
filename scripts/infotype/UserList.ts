@@ -90,4 +90,33 @@ class UserList extends Info {
 
 		return tl;
 	}
+
+	/**
+	 * Check if 'this' is equal to info in param.
+	 *
+	 * @method equals
+	 * @param {Info} info - Info to update.
+	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
+	 */
+	equals(info : UserList) : boolean {
+		if(this.getUsers().length != info.getUsers().length) {
+			return false;
+		} else {
+			var equalStatus = true;
+
+			this.getUsers().forEach(function (user : User) {
+				var existEqual = false;
+
+				info.getUsers().forEach(function(otherUser : User) {
+					if(!existEqual) {
+						existEqual = user.equals(otherUser);
+					}
+				});
+
+				equalStatus = equalStatus && existEqual;
+			});
+
+			return equalStatus;
+		}
+	}
 }
