@@ -1,5 +1,6 @@
 /**
  * @author Simon Urli <simon@the6thscreen.fr>
+ * @author Christian Brel <christian@the6thscreen.fr, ch.brel@gmail.com>
  */
 
 /// <reference path="./Cmd.ts" />
@@ -101,6 +102,24 @@ class CmdList extends Info {
 	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
 	 */
 	equals(info : CmdList) : boolean {
-		return this.getCmds() == info.getCmds();
+		if(this.getCmds().length != info.getCmds().length) {
+			return false;
+		} else {
+			var equalStatus = true;
+
+			this.getCmds().forEach(function (cmd : Cmd) {
+				var existEqual = false;
+
+				info.getCmds().forEach(function(otherCmd : Cmd) {
+					if(!existEqual) {
+						existEqual = cmd.equals(otherCmd);
+					}
+				});
+
+				equalStatus = equalStatus && existEqual;
+			});
+
+			return equalStatus;
+		}
 	}
 }
