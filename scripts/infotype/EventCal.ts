@@ -8,9 +8,9 @@
 /**
  * Represent an event (e.g. from a Calendar)
  *
- * @class Event
+ * @class EventCal
  */
-class Event extends Info {
+class EventCal extends Info {
 
 	/**
 	 * Define when the event starts
@@ -153,7 +153,7 @@ class Event extends Info {
 		this.setLocation(location);
 	}
 
-	static fromJSONObject(jsonObject : any) : Event {
+	static fromJSONObject(jsonObject : any) : EventCal {
 		if (typeof(jsonObject._id) == "undefined") {
 			throw new InfoException("An Event object should have an ID.");
 		}
@@ -189,7 +189,7 @@ class Event extends Info {
 			throw new InfoException("An Event object should have a location.");
 		}
 
-		var e : Event = new Event(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate);
+		var e : EventCal = new EventCal(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate);
 		e.setName(jsonObject._name);
 		e.setStart(jsonObject._start);
 		e.setEnd(jsonObject._end);
@@ -206,7 +206,7 @@ class Event extends Info {
 	 * @param {Info} info - Info to update.
 	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
 	 */
-	equals(info : Event) : boolean {
+	equals(info : EventCal) : boolean {
 		return (this.getName() == info.getName() && this.getStart() == info.getStart() && this.getEnd() == info.getEnd() && this.getDescription() == info.getDescription() && this.getLocation() == info.getLocation());
 	}
 }

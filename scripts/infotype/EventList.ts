@@ -3,7 +3,7 @@
  */
 
 /// <reference path="./Info.ts" />
-/// <reference path="./Event.ts" />
+/// <reference path="./EventCal.ts" />
 /// <reference path="./exceptions/InfoException.ts" />
 
 /**
@@ -38,7 +38,7 @@ class EventList extends Info {
 	 * @type {Array<Event>}
 	 * @private
 	 */
-	private _events : Array<Event>;
+	private _events : Array<EventCal>;
 
 	/**
 	 * @method getName
@@ -76,7 +76,7 @@ class EventList extends Info {
 	 * @method getEvents
 	 * @returns {Array<Event>}
 	 */
-	public getEvents() : Array<Event> {
+	public getEvents() : Array<EventCal> {
 		return this._events;
 	}
 
@@ -84,7 +84,7 @@ class EventList extends Info {
 	 * @method addEvent
 	 * @param e
 	 */
-	public addEvent(e : Event) {
+	public addEvent(e : EventCal) {
 		this._events.push(e);
 	}
 
@@ -94,7 +94,7 @@ class EventList extends Info {
 	 * @constructor
 	 */
 	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
-	            name : string = "", description : string = "", events : Array<Event> = new Array<Event>()) {
+	            name : string = "", description : string = "", events : Array<EventCal> = new Array<EventCal>()) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
 
 		this.setName(name);
@@ -139,7 +139,7 @@ class EventList extends Info {
 
 		for(var i = 0; i < jsonObject._events.length; i++) {
 			var pDesc = jsonObject._events[i];
-			var p : Event = Event.fromJSONObject(pDesc);
+			var p : EventCal = EventCal.fromJSONObject(pDesc);
 			el.addEvent(p);
 		}
 
@@ -160,10 +160,10 @@ class EventList extends Info {
 		} else {
 			var equalStatus = true;
 
-			this.getEvents().forEach(function (event : Event) {
+			this.getEvents().forEach(function (event : EventCal) {
 				var existEqual = false;
 
-				info.getEvents().forEach(function(otherEvent : Event) {
+				info.getEvents().forEach(function(otherEvent : EventCal) {
 					if(!existEqual) {
 						existEqual = event.equals(otherEvent);
 					}
