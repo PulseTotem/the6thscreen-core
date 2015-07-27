@@ -30,9 +30,9 @@ class DateTime extends Info {
 	 *
 	 * @constructor
 	 */
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
+	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
 	            date : Date = null, description : string = "") {
-		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
+		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
 		this._date = date;
 		this._description = description;
@@ -105,6 +105,12 @@ class DateTime extends Info {
 		if(typeof(jsonObject._durationToDisplay) == "undefined") {
 			throw new InfoException("A DateTime object should have a durationToDisplay.");
 		}
+		if(typeof(jsonObject._serviceLogo) == "undefined") {
+			throw new InfoException("A DateTime object should have a serviceLogo.");
+		}
+		if(typeof(jsonObject._serviceName) == "undefined") {
+			throw new InfoException("A DateTime object should have a serviceLogo.");
+		}
 
 		if(typeof(jsonObject._date) == "undefined") {
 			throw new InfoException("A DateTime object should have a date.");
@@ -114,7 +120,7 @@ class DateTime extends Info {
 			throw new InfoException("A DateTime object should have a description.");
 		}
 
-		var t : DateTime = new DateTime(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate,
+		var t : DateTime = new DateTime(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName,
 			jsonObject._date, jsonObject._description);
 
 		return t;

@@ -1,6 +1,6 @@
 /**
  * @author Christian Brel <christian@the6thscreen.fr, ch.brel@gmail.com>
- * @author Simon Urli <simon@the6thscreen.fr, simon.urli@gmail.com>
+ * @author Simon Urli <simon@the6thscreen.fr>
  */
 
 class Info {
@@ -10,14 +10,18 @@ class Info {
 	private _castingDate : Date;
 	private _obsoleteDate : Date;
 	private _durationToDisplay : number;
+    private _serviceLogo : string;
+    private _serviceName : string;
 
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null) {
+	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "") {
 		this._id = id;
         this._priority = priority;
         this._creationDate = creationDate;
         this._obsoleteDate = obsoleteDate;
         this._durationToDisplay = durationToDisplay;
         this._castingDate = castingDate;
+        this._serviceLogo = serviceLogo;
+        this._serviceName = serviceName;
 	}
 
     getId() {
@@ -68,6 +72,22 @@ class Info {
         this._durationToDisplay = durationToDisplay;
     }
 
+    getServiceLogo() {
+        return this._serviceLogo;
+    }
+
+    setServiceLogo(serviceLogo : string) {
+        this._serviceLogo = serviceLogo;
+    }
+
+    getServiceName() {
+        return this._serviceName;
+    }
+
+    setServiceName(serviceName : string) {
+        this._serviceName = serviceName;
+    }
+
 	/**
 	 * Return an array of Info instance from a JSON Array.
 	 *
@@ -103,4 +123,15 @@ class Info {
 		Logger.error("Info - equals : Method need to be implemented.");
 		return false;
 	}
+
+    propagateServiceInfo() {
+        Logger.error("Info - Propagate service info : method need to be implemented.");
+    }
+
+    replaceServiceInfoInChildren(children : Array<Info>, parent : Info) {
+        children.forEach(function (info: Info) {
+            info.setServiceLogo(parent.getServiceLogo());
+            info.setServiceName(parent.getServiceName());
+        });
+    }
 }

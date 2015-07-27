@@ -30,9 +30,9 @@ class Tag extends Info {
 	 *
 	 * @constructor
 	 */
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
+	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
 				name : string = null, popularity : number = 0) {
-		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
+		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
 		this._name = name;
 		this._popularity = popularity;
@@ -105,6 +105,12 @@ class Tag extends Info {
 		if(typeof(jsonObject._durationToDisplay) == "undefined") {
 			throw new InfoException("A Tag object should have a durationToDisplay.");
 		}
+		if(typeof(jsonObject._serviceLogo) == "undefined") {
+			throw new InfoException("A Tag object should have a serviceLogo.");
+		}
+		if(typeof(jsonObject._serviceName) == "undefined") {
+			throw new InfoException("A Tag object should have a serviceName.");
+		}
 
 		if(typeof(jsonObject._name) == "undefined") {
 			throw new InfoException("A Tag object should have a name.");
@@ -114,7 +120,7 @@ class Tag extends Info {
 			throw new InfoException("A Tag object should have a popularity.");
 		}
 
-		var t : Tag = new Tag(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate,
+		var t : Tag = new Tag(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName,
 			jsonObject._name, jsonObject._popularity);
 
 		return t;

@@ -105,10 +105,10 @@ class Picture extends Info {
 	 *
 	 * @constructor
 	 */
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
+	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
 				title : string = null, description : string = null, original : PictureURL = null, small : PictureURL = null, medium : PictureURL = null,
 				large : PictureURL = null, thumb : PictureURL = null, orientation : string = null, tags : Array<Tag> = new Array<Tag>(), owner : User = null) {
-		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
+		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
 		this._title = title;
 		this._description = description;
@@ -349,6 +349,12 @@ class Picture extends Info {
 		if(typeof(jsonObject._durationToDisplay) == "undefined") {
 			throw new InfoException("A Picture object should have a durationToDisplay.");
 		}
+		if(typeof(jsonObject._serviceLogo) == "undefined") {
+			throw new InfoException("A Picture object should have a serviceLogo.");
+		}
+		if(typeof(jsonObject._serviceName) == "undefined") {
+			throw new InfoException("A Picture object should have a serviceName.");
+		}
 
 		if(typeof(jsonObject._title) == "undefined") {
 			throw new InfoException("A Picture object should have a title.");
@@ -381,7 +387,7 @@ class Picture extends Info {
 			throw new InfoException("A Picture object should have an owner.");
 		}
 
-		var p : Picture = new Picture(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate);
+		var p : Picture = new Picture(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName);
 
 		p.setTitle(jsonObject._title);
 		p.setDescription(jsonObject._description);

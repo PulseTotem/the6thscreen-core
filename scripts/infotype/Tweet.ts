@@ -95,10 +95,10 @@ class Tweet extends Info {
 	 *
 	 * @constructor
 	 */
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
+	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
 				owner : User = null, message : string = null, favoriteCount : number = 0, retweetCount : number = 0, lang : string = null, sensitive : boolean = false,
 				pictures : Array<Picture> = new Array<Picture>(), hashtags : Array<Tag> = new Array<Tag>(), originalTweet : Tweet = null) {
-		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
+		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
 		this.setOwner(owner);
 		this.setMessage(message);
@@ -318,6 +318,12 @@ class Tweet extends Info {
 		if(typeof(jsonObject._durationToDisplay) == "undefined") {
 			throw new InfoException("A Tweet object should have a durationToDisplay.");
 		}
+		if(typeof(jsonObject._serviceLogo) == "undefined") {
+			throw new InfoException("A Tweet object should have a serviceLogo.");
+		}
+		if(typeof(jsonObject._serviceName) == "undefined") {
+			throw new InfoException("A Tweet object should have a serviceName.");
+		}
 
 		if(typeof(jsonObject._owner) == "undefined") {
 			throw new InfoException("A Tweet object should have an owner.");
@@ -347,7 +353,7 @@ class Tweet extends Info {
 			throw new InfoException("A Tweet object should have hashtags.");
 		}
 
-		var t : Tweet = new Tweet(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate);
+		var t : Tweet = new Tweet(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName);
 
 		t.setOwner(User.fromJSONObject(jsonObject._owner));
 		t.setMessage(jsonObject._message);

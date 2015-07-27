@@ -31,9 +31,9 @@ class VideoURL extends Info {
 	 *
 	 * @constructor
 	 */
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10000, castingDate : Date = null,
+	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10000, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
 	            url : string = null, type : VideoType = null) {
-		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
+		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
 		this._url = url;
 		this._type = type;
@@ -104,6 +104,12 @@ class VideoURL extends Info {
 		if(typeof(jsonObject._durationToDisplay) == "undefined") {
 			throw new InfoException("A VideoURL object should have a durationToDisplay.");
 		}
+		if(typeof(jsonObject._serviceLogo) == "undefined") {
+			throw new InfoException("A VideoURL object should have a serviceLogo.");
+		}
+		if(typeof(jsonObject._serviceName) == "undefined") {
+			throw new InfoException("A VideoURL object should have a serviceName.");
+		}
 
 		if(typeof(jsonObject._url) == "undefined") {
 			throw new InfoException("A VideoURL object should have an url.");
@@ -112,7 +118,7 @@ class VideoURL extends Info {
 			throw new InfoException("A VideoURL object should have a type.");
 		}
 
-		var v : VideoURL = new VideoURL(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate,
+		var v : VideoURL = new VideoURL(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName,
 			jsonObject._url, jsonObject._type);
 
 		return v;

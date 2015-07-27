@@ -22,9 +22,9 @@ class DiscountsList extends Info {
      *
      * @constructor
      */
-    constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
+    constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
                 discounts : Array<Discount> = new Array<Discount>()) {
-        super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
+        super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
         this._discounts = discounts;
     }
 
@@ -75,10 +75,17 @@ class DiscountsList extends Info {
         if(typeof(jsonObject._durationToDisplay) == "undefined") {
             throw new InfoException("A DiscountsList object should have a durationToDisplay.");
         }
+        if(typeof(jsonObject._serviceLogo) == "undefined") {
+            throw new InfoException("A DiscountsList object should have a serviceLogo.");
+        }
+        if(typeof(jsonObject._serviceName) == "undefined") {
+            throw new InfoException("A DiscountsList object should have a serviceLogo.");
+        }
+
         if(typeof(jsonObject._discounts) == "undefined") {
             throw new InfoException("A DiscountsList object should have discounts.");
         }
-        var dl : DiscountsList = new DiscountsList(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate);
+        var dl : DiscountsList = new DiscountsList(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName);
 
         for(var i = 0; i < jsonObject._discounts.length; i++) {
             var dDesc = jsonObject._discounts[i];
@@ -117,4 +124,9 @@ class DiscountsList extends Info {
 			return equalStatus;
 		}
 	}
+
+    propagateServiceInfo() {
+        var self = this;
+        this.replaceServiceInfoInChildren(this._discounts, self);
+    }
 }

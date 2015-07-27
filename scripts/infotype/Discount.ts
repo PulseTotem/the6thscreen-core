@@ -74,9 +74,9 @@ class Discount extends Info {
      *
      * @constructor
      */
-    constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
+    constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
                 type : number = null, value : number = null, productId : string = null, productName : string = null, productBarCode : string = null, productImage : string = null, productDescription : string = null) {
-        super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
+        super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
         this._type = type;
         this._value = value;
@@ -254,6 +254,13 @@ class Discount extends Info {
         if(typeof(jsonObject._durationToDisplay) == "undefined") {
             throw new InfoException("A Discount object should have a durationToDisplay.");
         }
+        if(typeof(jsonObject._serviceLogo) == "undefined") {
+            throw new InfoException("A Discount object should have a serviceLogo.");
+        }
+        if(typeof(jsonObject._serviceName) == "undefined") {
+            throw new InfoException("A Discount object should have a serviceLogo.");
+        }
+
         if(typeof(jsonObject._type) == "undefined") {
             throw new InfoException("A Discount object should have a type.");
         }
@@ -275,7 +282,7 @@ class Discount extends Info {
         if(typeof(jsonObject._productDescription) == "undefined") {
             throw new InfoException("A Discount object should have a productDescription.");
         }
-        var d : Discount = new Discount(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate,
+        var d : Discount = new Discount(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName,
             jsonObject._type, jsonObject._value, jsonObject._productId, jsonObject._productName, jsonObject._productBarCode, jsonObject._productImage, jsonObject._productDescription);
 
         return d;

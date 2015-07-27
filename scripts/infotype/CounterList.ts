@@ -22,9 +22,9 @@ class CounterList extends Info {
 	 *
 	 * @constructor
 	 */
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
+	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
 				counters : Array<Counter> = new Array<Counter>()) {
-		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
+		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 		this._counters = counters;
 	}
 
@@ -75,12 +75,18 @@ class CounterList extends Info {
 		if(typeof(jsonObject._durationToDisplay) == "undefined") {
 			throw new InfoException("A CounterList object should have a durationToDisplay.");
 		}
+		if(typeof(jsonObject._serviceLogo) == "undefined") {
+			throw new InfoException("A CounterList object should have a serviceLogo.");
+		}
+		if(typeof(jsonObject._serviceName) == "undefined") {
+			throw new InfoException("A CounterList object should have a serviceLogo.");
+		}
 
 		if(typeof(jsonObject._counters) == "undefined") {
 			throw new InfoException("A CounterList object should have counters.");
 		}
 
-		var cl : CounterList = new CounterList(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate);
+		var cl : CounterList = new CounterList(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName);
 
 		for(var i = 0; i < jsonObject._counters.length; i++) {
 			var cDesc = jsonObject._counters[i];
@@ -118,5 +124,10 @@ class CounterList extends Info {
 
 			return equalStatus;
 		}
+	}
+
+	propagateServiceInfo() {
+		var self = this;
+		this.replaceServiceInfoInChildren(this._counters, self);
 	}
 }
