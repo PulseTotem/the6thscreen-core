@@ -124,9 +124,7 @@ class Info {
 		return false;
 	}
 
-    propagateServiceInfo() {
-        Logger.error("Info - Propagate service info : method need to be implemented.");
-    }
+    propagateServiceInfo() {}
 
     replaceServiceInfoInChildren(children : Array<Info>, parent : Info) {
         children.forEach(function (info: Info) {
