@@ -30,9 +30,9 @@ class Cmd extends Info {
 	 *
 	 * @constructor
 	 */
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
+	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
 	            cmd : string = "", args : Array<string> = new Array<string>()) {
-		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
+		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
 		this._cmd = cmd;
 		this._args = args;
@@ -105,6 +105,12 @@ class Cmd extends Info {
 		if(typeof(jsonObject._durationToDisplay) == "undefined") {
 			throw new InfoException("A Cmd object should have a durationToDisplay.");
 		}
+		if(typeof(jsonObject._serviceLogo) == "undefined") {
+			throw new InfoException("A Cmd object should have a serviceLogo.");
+		}
+		if(typeof(jsonObject._serviceName) == "undefined") {
+			throw new InfoException("A Cmd object should have a serviceLogo.");
+		}
 
 		if(typeof(jsonObject._cmd) == "undefined") {
 			throw new InfoException("A Cmd object should have a cmd.");
@@ -114,7 +120,7 @@ class Cmd extends Info {
 			throw new InfoException("A Cmd object should have args.");
 		}
 
-		var t : Cmd = new Cmd(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate,
+		var t : Cmd = new Cmd(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName,
 			jsonObject._cmd, jsonObject._args);
 
 		return t;

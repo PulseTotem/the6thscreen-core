@@ -142,9 +142,9 @@ class EventCal extends Info {
 	 *
 	 * @constructor
 	 */
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
+	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
 	            start : Date = null, end : Date = null, name : string = null, description : string = null, location : string = null) {
-		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
+		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
 		this.setStart(start);
 		this.setEnd(end);
@@ -172,6 +172,12 @@ class EventCal extends Info {
 		if(typeof(jsonObject._durationToDisplay) == "undefined") {
 			throw new InfoException("An Event object should have a durationToDisplay.");
 		}
+		if(typeof(jsonObject._serviceLogo) == "undefined") {
+			throw new InfoException("An EventCal object should have a serviceLogo.");
+		}
+		if(typeof(jsonObject._serviceName) == "undefined") {
+			throw new InfoException("An EventCal object should have a serviceLogo.");
+		}
 
 		if(typeof(jsonObject._name) == "undefined") {
 			throw new InfoException("An Event object should have a name.");
@@ -189,7 +195,7 @@ class EventCal extends Info {
 			throw new InfoException("An Event object should have a location.");
 		}
 
-		var e : EventCal = new EventCal(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate);
+		var e : EventCal = new EventCal(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName);
 		e.setName(jsonObject._name);
 		e.setStart(jsonObject._start);
 		e.setEnd(jsonObject._end);

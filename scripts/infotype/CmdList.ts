@@ -24,9 +24,9 @@ class CmdList extends Info {
 	 *
 	 * @constructor
 	 */
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
+	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
 	            cmds : Array<Cmd> = new Array<Cmd>()) {
-		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
+		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
 		this._cmds = cmds;
 	}
@@ -78,12 +78,18 @@ class CmdList extends Info {
 		if(typeof(jsonObject._durationToDisplay) == "undefined") {
 			throw new InfoException("A CmdList object should have a durationToDisplay.");
 		}
+		if(typeof(jsonObject._serviceLogo) == "undefined") {
+			throw new InfoException("A CmdList object should have a serviceLogo.");
+		}
+		if(typeof(jsonObject._serviceName) == "undefined") {
+			throw new InfoException("A CmdList object should have a serviceLogo.");
+		}
 
 		if(typeof(jsonObject._cmds) == "undefined") {
 			throw new InfoException("A CmdList object should have cmds.");
 		}
 
-		var t : CmdList = new CmdList(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate);
+		var t : CmdList = new CmdList(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName);
 
 		for(var i = 0; i < jsonObject._cmds.length; i++) {
 			var pDesc = jsonObject._cmds[i];
@@ -121,5 +127,10 @@ class CmdList extends Info {
 
 			return equalStatus;
 		}
+	}
+
+	propagateServiceInfo() {
+		var self = this;
+		this.replaceServiceInfoInChildren(this._cmds, self);
 	}
 }

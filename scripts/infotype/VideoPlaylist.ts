@@ -22,8 +22,8 @@ class VideoPlaylist extends Info {
 	 *
 	 * @constructor
 	 */
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10000, castingDate : Date = null) {
-		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
+	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10000, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "") {
+		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
 		this._videos = new Array<VideoURL>();
 	}
@@ -69,8 +69,14 @@ class VideoPlaylist extends Info {
 		if(typeof(jsonObject._durationToDisplay) == "undefined") {
 			throw new InfoException("A VideoURL object should have a durationToDisplay.");
 		}
+		if(typeof(jsonObject._serviceLogo) == "undefined") {
+			throw new InfoException("A VideoPlaylist object should have a serviceLogo.");
+		}
+		if(typeof(jsonObject._serviceName) == "undefined") {
+			throw new InfoException("A VideoPlaylist object should have a serviceName.");
+		}
 
-		var v : VideoPlaylist = new VideoPlaylist(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate);
+		var v : VideoPlaylist = new VideoPlaylist(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName);
 
 		for(var i = 0; i < jsonObject._videos.length; i++) {
 			var videoDesc = jsonObject._videos[i];
@@ -108,5 +114,10 @@ class VideoPlaylist extends Info {
 
 			return equalStatus;
 		}
+	}
+
+	propagateServiceInfo() {
+		var self = this;
+		this.replaceServiceInfoInChildren(this._videos, self);
 	}
 }

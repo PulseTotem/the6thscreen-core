@@ -22,9 +22,9 @@ class TagList extends Info {
 	 *
 	 * @constructor
 	 */
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
+	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
 				tags : Array<Tag> = new Array<Tag>()) {
-		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
+		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 		this._tags = tags;
 	}
 
@@ -75,12 +75,18 @@ class TagList extends Info {
 		if(typeof(jsonObject._durationToDisplay) == "undefined") {
 			throw new InfoException("A TagList object should have a durationToDisplay.");
 		}
+		if(typeof(jsonObject._serviceLogo) == "undefined") {
+			throw new InfoException("A TagList object should have a serviceLogo.");
+		}
+		if(typeof(jsonObject._serviceName) == "undefined") {
+			throw new InfoException("A TagList object should have a serviceName.");
+		}
 
 		if(typeof(jsonObject._tags) == "undefined") {
 			throw new InfoException("A TagList object should have tags.");
 		}
 
-		var cl : TagList = new TagList(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate);
+		var cl : TagList = new TagList(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName);
 
 		for(var i = 0; i < jsonObject._tags.length; i++) {
 			var cDesc = jsonObject._tags[i];
@@ -118,5 +124,10 @@ class TagList extends Info {
 
 			return equalStatus;
 		}
+	}
+
+	propagateServiceInfo() {
+		var self = this;
+		this.replaceServiceInfoInChildren(this._tags, self);
 	}
 }

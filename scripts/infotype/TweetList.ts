@@ -22,9 +22,9 @@ class TweetList extends Info {
 	 *
 	 * @constructor
 	 */
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
+	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
 				tweets : Array<Tweet> = new Array<Tweet>()) {
-		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
+		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 		this._tweets = tweets;
 	}
 
@@ -75,12 +75,18 @@ class TweetList extends Info {
 		if(typeof(jsonObject._durationToDisplay) == "undefined") {
 			throw new InfoException("A TweetList object should have a durationToDisplay.");
 		}
+		if(typeof(jsonObject._serviceLogo) == "undefined") {
+			throw new InfoException("A TweetList object should have a serviceLogo.");
+		}
+		if(typeof(jsonObject._serviceName) == "undefined") {
+			throw new InfoException("A TweetList object should have a serviceName.");
+		}
 
 		if(typeof(jsonObject._tweets) == "undefined") {
 			throw new InfoException("A TweetList object should have tweets.");
 		}
 
-		var tl : TweetList = new TweetList(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate);
+		var tl : TweetList = new TweetList(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName);
 
 		for(var i = 0; i < jsonObject._tweets.length; i++) {
 			var tDesc = jsonObject._tweets[i];
@@ -118,5 +124,10 @@ class TweetList extends Info {
 
 			return equalStatus;
 		}
+	}
+
+	propagateServiceInfo() {
+		var self = this;
+		this.replaceServiceInfoInChildren(this._tweets, self);
 	}
 }
