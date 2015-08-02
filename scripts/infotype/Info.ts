@@ -3,6 +3,9 @@
  * @author Simon Urli <simon@the6thscreen.fr>
  */
 
+/// <reference path="./priorities/InfoPriority.ts" />
+/// <reference path="../logger/Logger.ts" />
+
 class Info {
 	private _id : string;
 	private _priority : number;
@@ -13,7 +16,7 @@ class Info {
     private _serviceLogo : string;
     private _serviceName : string;
 
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "") {
+	constructor(id : string = "noId", priority : number = InfoPriority.LOW, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "") {
 		this._id = id;
         this._priority = priority;
         this._creationDate = creationDate;
