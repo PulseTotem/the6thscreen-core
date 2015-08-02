@@ -5,8 +5,11 @@
 
 /// <reference path="./priorities/InfoPriority.ts" />
 /// <reference path="../logger/Logger.ts" />
+/// <reference path="./exceptions/InfoException.ts" />
 
 class Info {
+    public static DEFAULT_DURATION = 10;
+
 	private _id : string;
 	private _priority : number;
 	private _creationDate : Date;
@@ -16,15 +19,16 @@ class Info {
     private _serviceLogo : string;
     private _serviceName : string;
 
-	constructor(id : string = "noId", priority : number = InfoPriority.LOW, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "") {
-		this._id = id;
-        this._priority = priority;
-        this._creationDate = creationDate;
-        this._obsoleteDate = obsoleteDate;
-        this._durationToDisplay = durationToDisplay;
-        this._castingDate = castingDate;
-        this._serviceLogo = serviceLogo;
-        this._serviceName = serviceName;
+	constructor(id : string = "noId", priority : number = InfoPriority.LOW, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = Info.DEFAULT_DURATION, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "") {
+
+        this.setId(id);
+        this.setPriority(priority);
+        this.setCreationDate(creationDate);
+        this.setObsoleteDate(obsoleteDate);
+        this.setDurationToDisplay(durationToDisplay);
+        this.setCastingDate(castingDate);
+        this.setServiceLogo(serviceLogo);
+        this.setServiceName(serviceName);
 	}
 
     getId() {
@@ -89,6 +93,44 @@ class Info {
 
     setServiceName(serviceName : string) {
         this._serviceName = serviceName;
+    }
+
+    static getInfoFromJSONObject<T extends Info>(jsonObject : any, type: any ) : T {
+        if (typeof(jsonObject._id) == "undefined") {
+            throw new InfoException("A Picture object should have an ID.");
+        }
+        if(typeof(jsonObject._priority) == "undefined") {
+            throw new InfoException("A Picture object should have a priority.");
+        }
+        if(typeof(jsonObject._creationDate) == "undefined") {
+            throw new InfoException("A Picture object should have a creationDate.");
+        }
+        if(typeof(jsonObject._castingDate) == "undefined") {
+            throw new InfoException("A Picture object should have a castingDate.");
+        }
+        if(typeof(jsonObject._obsoleteDate) == "undefined") {
+            throw new InfoException("A Picture object should have an obsoleteDate.");
+        }
+        if(typeof(jsonObject._durationToDisplay) == "undefined") {
+            throw new InfoException("A Picture object should have a durationToDisplay.");
+        }
+        if(typeof(jsonObject._serviceLogo) == "undefined") {
+            throw new InfoException("A Picture object should have a serviceLogo.");
+        }
+        if(typeof(jsonObject._serviceName) == "undefined") {
+            throw new InfoException("A Picture object should have a serviceName.");
+        }
+
+        var result = new type();
+        result.setId(jsonObject._id);
+        result.setPriority(jsonObject._priority);
+        result.setCreationDate(jsonObject._creationDate);
+        result.setCastingDate(jsonObject._castingDate);
+        result.setObsoleteDate(jsonObject._obsoleteDate);
+        result.setDurationToDisplay(jsonObject._durationToDisplay);
+        result.setServiceLogo(jsonObject._serviceLogo);
+        result.setServiceName(jsonObject._serviceName);
+        return result;
     }
 
 	/**
