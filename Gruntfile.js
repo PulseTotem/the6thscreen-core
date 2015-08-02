@@ -19,6 +19,12 @@ module.exports = function (grunt) {
 // ---------------------------------------------
 
         typescript: {
+            build: {
+                src: [
+                    'scripts/**/*.ts'
+                ],
+                dest: 'build/js/Core.js'
+            },
             test: {
                 src: [
                     'tests/**/*.ts'
@@ -101,8 +107,8 @@ module.exports = function (grunt) {
     grunt.registerTask('doc', ['clean:doc', 'yuidoc']);
 
     grunt.registerTask('initTest', function() {
-        grunt.task.run(['clean:test']);
-        grunt.task.run(['typescript:test']);
+        grunt.task.run(['clean:build']);
+        grunt.task.run(['typescript:build','typescript:test']);
     });
 
     grunt.registerTask('coverage', ['initTest', 'mocha_istanbul:coverage']);
