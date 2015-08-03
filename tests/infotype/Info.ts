@@ -196,7 +196,7 @@ describe('Info', function() {
 			parent.setServiceLogo("trucmuche");
 			parent.setServiceName("bidule");
 
-			parent.replaceServiceInfoInChildren(array, parent);
+			Info.replaceServiceInfoInChildren(array, parent);
 
 			for(var i = 0; i < array.length; i++) {
 				assert.equal(array[i].getServiceLogo(), parent.getServiceLogo(), "The serviceLogo is not the one expected for i="+i+" : "+array[i].getServiceLogo());
