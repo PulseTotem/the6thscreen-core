@@ -131,6 +131,6 @@ class CmdList extends Info {
 
 	propagateServiceInfo() {
 		var self = this;
-		this.replaceServiceInfoInChildren(this._cmds, self);
+		Info.replaceServiceInfoInChildren(this._cmds, self);
 	}
 }

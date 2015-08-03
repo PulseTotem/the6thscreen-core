@@ -184,6 +184,6 @@ class EventList extends Info {
 
 	propagateServiceInfo() {
 		var self = this;
-		this.replaceServiceInfoInChildren(this._events, self);
+		Info.replaceServiceInfoInChildren(this._events, self);
 	}
 }

@@ -331,30 +331,7 @@ class Picture extends Info {
 	 * @return {Picture} The InfoType instance.
 	 */
 	static fromJSONObject(jsonObject : any) : Picture {
-		if (typeof(jsonObject._id) == "undefined") {
-			throw new InfoException("A Picture object should have an ID.");
-		}
-		if(typeof(jsonObject._priority) == "undefined") {
-			throw new InfoException("A Picture object should have a priority.");
-		}
-		if(typeof(jsonObject._creationDate) == "undefined") {
-			throw new InfoException("A Picture object should have a creationDate.");
-		}
-		if(typeof(jsonObject._castingDate) == "undefined") {
-			throw new InfoException("A Picture object should have a castingDate.");
-		}
-		if(typeof(jsonObject._obsoleteDate) == "undefined") {
-			throw new InfoException("A Picture object should have an obsoleteDate.");
-		}
-		if(typeof(jsonObject._durationToDisplay) == "undefined") {
-			throw new InfoException("A Picture object should have a durationToDisplay.");
-		}
-		if(typeof(jsonObject._serviceLogo) == "undefined") {
-			throw new InfoException("A Picture object should have a serviceLogo.");
-		}
-		if(typeof(jsonObject._serviceName) == "undefined") {
-			throw new InfoException("A Picture object should have a serviceName.");
-		}
+		var p : Picture = Info.getInfoFromJSONObject<Picture>(jsonObject, Picture);
 
 		if(typeof(jsonObject._title) == "undefined") {
 			throw new InfoException("A Picture object should have a title.");
@@ -386,8 +363,6 @@ class Picture extends Info {
 		if(typeof(jsonObject._owner) == "undefined") {
 			throw new InfoException("A Picture object should have an owner.");
 		}
-
-		var p : Picture = new Picture(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName);
 
 		p.setTitle(jsonObject._title);
 		p.setDescription(jsonObject._description);

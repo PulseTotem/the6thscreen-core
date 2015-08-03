@@ -128,6 +128,6 @@ class DateTimeList extends Info {
 
 	propagateServiceInfo() {
 		var self = this;
-		this.replaceServiceInfoInChildren(this._datetimes, self);
+		Info.replaceServiceInfoInChildren(this._datetimes, self);
 	}
 }

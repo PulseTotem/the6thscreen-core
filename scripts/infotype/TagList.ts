@@ -128,6 +128,6 @@ class TagList extends Info {
 
 	propagateServiceInfo() {
 		var self = this;
-		this.replaceServiceInfoInChildren(this._tags, self);
+		Info.replaceServiceInfoInChildren(this._tags, self);
 	}
 }

@@ -304,6 +304,6 @@ class FeedContent extends Info {
 
     propagateServiceInfo() {
         var self = this;
-        this.replaceServiceInfoInChildren(this._feedNodes, self);
+        Info.replaceServiceInfoInChildren(this._feedNodes, self);
     }
 }

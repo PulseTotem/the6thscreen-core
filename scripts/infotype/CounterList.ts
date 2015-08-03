@@ -128,6 +128,6 @@ class CounterList extends Info {
 
 	propagateServiceInfo() {
 		var self = this;
-		this.replaceServiceInfoInChildren(this._counters, self);
+		Info.replaceServiceInfoInChildren(this._counters, self);
 	}
 }

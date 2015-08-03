@@ -128,6 +128,6 @@ class UserList extends Info {
 
 	propagateServiceInfo() {
 		var self = this;
-		this.replaceServiceInfoInChildren(this._users, self);
+		Info.replaceServiceInfoInChildren(this._users, self);
 	}
 }

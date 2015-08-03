@@ -3,7 +3,12 @@
  * @author Simon Urli <simon@the6thscreen.fr>
  */
 
+/// <reference path="./priorities/InfoPriority.ts" />
+/// <reference path="./exceptions/InfoException.ts" />
+
 class Info {
+    public static DEFAULT_DURATION = 10;
+
 	private _id : string;
 	private _priority : number;
 	private _creationDate : Date;
@@ -13,15 +18,16 @@ class Info {
     private _serviceLogo : string;
     private _serviceName : string;
 
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "") {
-		this._id = id;
-        this._priority = priority;
-        this._creationDate = creationDate;
-        this._obsoleteDate = obsoleteDate;
-        this._durationToDisplay = durationToDisplay;
-        this._castingDate = castingDate;
-        this._serviceLogo = serviceLogo;
-        this._serviceName = serviceName;
+	constructor(id : string = "noId", priority : number = InfoPriority.LOW, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = Info.DEFAULT_DURATION, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "") {
+
+        this.setId(id);
+        this.setPriority(priority);
+        this.setCreationDate(creationDate);
+        this.setObsoleteDate(obsoleteDate);
+        this.setDurationToDisplay(durationToDisplay);
+        this.setCastingDate(castingDate);
+        this.setServiceLogo(serviceLogo);
+        this.setServiceName(serviceName);
 	}
 
     getId() {
@@ -88,29 +94,43 @@ class Info {
         this._serviceName = serviceName;
     }
 
-	/**
-	 * Return an array of Info instance from a JSON Array.
-	 *
-	 * @method fromJSONArray
-	 * @static
-	 * @param {JSONArray} json - The JSON Array
-	 * @param {Info Class} infoClass - The Info Class contained in JSON Array
-	 */
-	static fromJSONArray(jsonArray : any, infoClass : any) {
-		var newListInfos = new Array();
+    static getInfoFromJSONObject<T extends Info>(jsonObject : any, type: any ) : T {
+        if (typeof(jsonObject._id) == "undefined") {
+            throw new InfoException("A Picture object should have an ID.");
+        }
+        if(typeof(jsonObject._priority) == "undefined") {
+            throw new InfoException("A Picture object should have a priority.");
+        }
+        if(typeof(jsonObject._creationDate) == "undefined") {
+            throw new InfoException("A Picture object should have a creationDate.");
+        }
+        if(typeof(jsonObject._castingDate) == "undefined") {
+            throw new InfoException("A Picture object should have a castingDate.");
+        }
+        if(typeof(jsonObject._obsoleteDate) == "undefined") {
+            throw new InfoException("A Picture object should have an obsoleteDate.");
+        }
+        if(typeof(jsonObject._durationToDisplay) == "undefined") {
+            throw new InfoException("A Picture object should have a durationToDisplay.");
+        }
+        if(typeof(jsonObject._serviceLogo) == "undefined") {
+            throw new InfoException("A Picture object should have a serviceLogo.");
+        }
+        if(typeof(jsonObject._serviceName) == "undefined") {
+            throw new InfoException("A Picture object should have a serviceName.");
+        }
 
-		for(var iInfo in jsonArray) {
-			try {
-				var infoDesc = jsonArray[iInfo];
-				var infoInstance = infoClass.fromJSONObject(infoDesc);
-				newListInfos.push(infoInstance);
-			} catch(e) {
-				Logger.error(e);
-			}
-		}
-
-		return newListInfos;
-	}
+        var result = new type();
+        result.setId(jsonObject._id);
+        result.setPriority(jsonObject._priority);
+        result.setCreationDate(jsonObject._creationDate);
+        result.setCastingDate(jsonObject._castingDate);
+        result.setObsoleteDate(jsonObject._obsoleteDate);
+        result.setDurationToDisplay(jsonObject._durationToDisplay);
+        result.setServiceLogo(jsonObject._serviceLogo);
+        result.setServiceName(jsonObject._serviceName);
+        return result;
+    }
 
 	/**
 	 * Check if 'this' is equal to info in param.
@@ -120,13 +140,19 @@ class Info {
 	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
 	 */
 	equals(info : Info) : boolean {
-		Logger.error("Info - equals : Method need to be implemented.");
+		throw new InfoException("Info - equals : Method need to be implemented.");
 		return false;
 	}
 
-    propagateServiceInfo() {}
+    /**
+     * This method needs to be implemented in each "Container" info type: it is called to propagate the information about service to the children.
+     */
+    propagateServiceInfo() {
+        throw new InfoException("Info - propagateServiceInfo : Method need to be implemented.");
+    }
 
-    replaceServiceInfoInChildren(children : Array<Info>, parent : Info) {
+
+    static replaceServiceInfoInChildren(children : Array<Info>, parent : Info) {
         children.forEach(function (info: Info) {
             info.setServiceLogo(parent.getServiceLogo());
             info.setServiceName(parent.getServiceName());

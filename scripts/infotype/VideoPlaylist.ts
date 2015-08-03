@@ -118,6 +118,6 @@ class VideoPlaylist extends Info {
 
 	propagateServiceInfo() {
 		var self = this;
-		this.replaceServiceInfoInChildren(this._videos, self);
+		Info.replaceServiceInfoInChildren(this._videos, self);
 	}
 }
