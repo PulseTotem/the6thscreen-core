@@ -179,11 +179,11 @@ describe('Info', function() {
 	});
 
 	describe('#equal', function () {
-		it('should always return false for Info', function () {
+		it('should always return an exception for Info', function () {
 			var i1 : Info = new Info("titi");
 			var i2 = i1;
 
-			assert.ok(!i1.equals(i2));
+			assert.throws(function() { !i1.equals(i2); }, InfoException, "The exception has not been thrown.");
 		});
 	});
 
