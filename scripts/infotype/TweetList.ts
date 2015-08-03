@@ -128,6 +128,6 @@ class TweetList extends Info {
 
 	propagateServiceInfo() {
 		var self = this;
-		this.replaceServiceInfoInChildren(this._tweets, self);
+		Info.replaceServiceInfoInChildren(this._tweets, self);
 	}
 }

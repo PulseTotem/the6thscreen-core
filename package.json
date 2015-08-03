@@ -12,9 +12,5 @@
     "istanbul": "~0.3.17",
     "grunt-mocha-istanbul": "~2.4.0",
     "mocha": "~2.2.5"
-  },
-  "dependencies": {
-    "moment": "~2.10.3",
-    "colors": "~0.6.2"
   }
 }

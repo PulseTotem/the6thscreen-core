@@ -4,7 +4,6 @@
  */
 
 /// <reference path="./priorities/InfoPriority.ts" />
-/// <reference path="../logger/Logger.ts" />
 /// <reference path="./exceptions/InfoException.ts" />
 
 class Info {
@@ -134,30 +133,6 @@ class Info {
     }
 
 	/**
-	 * Return an array of Info instance from a JSON Array.
-	 *
-	 * @method fromJSONArray
-	 * @static
-	 * @param {JSONArray} json - The JSON Array
-	 * @param {Info Class} infoClass - The Info Class contained in JSON Array
-	 */
-	static fromJSONArray(jsonArray : any, infoClass : any) {
-		var newListInfos = new Array();
-
-		for(var iInfo in jsonArray) {
-			try {
-				var infoDesc = jsonArray[iInfo];
-				var infoInstance = infoClass.fromJSONObject(infoDesc);
-				newListInfos.push(infoInstance);
-			} catch(e) {
-				Logger.error(e);
-			}
-		}
-
-		return newListInfos;
-	}
-
-	/**
 	 * Check if 'this' is equal to info in param.
 	 *
 	 * @method equals
@@ -165,13 +140,19 @@ class Info {
 	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
 	 */
 	equals(info : Info) : boolean {
-		Logger.error("Info - equals : Method need to be implemented.");
+		throw new InfoException("Info - equals : Method need to be implemented.");
 		return false;
 	}
 
-    propagateServiceInfo() {}
+    /**
+     * This method needs to be implemented in each "Container" info type: it is called to propagate the information about service to the children.
+     */
+    propagateServiceInfo() {
+        throw new InfoException("Info - propagateServiceInfo : Method need to be implemented.");
+    }
 
-    replaceServiceInfoInChildren(children : Array<Info>, parent : Info) {
+
+    static replaceServiceInfoInChildren(children : Array<Info>, parent : Info) {
         children.forEach(function (info: Info) {
             info.setServiceLogo(parent.getServiceLogo());
             info.setServiceName(parent.getServiceName());

@@ -128,6 +128,6 @@ class PictureAlbum extends Info {
 
 	propagateServiceInfo() {
 		var self = this;
-		this.replaceServiceInfoInChildren(this._pictures, self);
+		Info.replaceServiceInfoInChildren(this._pictures, self);
 	}
 }

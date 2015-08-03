@@ -127,6 +127,6 @@ class DiscountsList extends Info {
 
     propagateServiceInfo() {
         var self = this;
-        this.replaceServiceInfoInChildren(this._discounts, self);
+        Info.replaceServiceInfoInChildren(this._discounts, self);
     }
 }
