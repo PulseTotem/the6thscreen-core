@@ -114,7 +114,7 @@ module.exports = function (grunt) {
     grunt.registerTask('coverage', ['initTest', 'mocha_istanbul:coverage']);
     grunt.registerTask('test', ['initTest', 'mochaTest:test']);
 
-    grunt.registerTask('jenkins', ['initTest', 'mochaTest:jenkins', 'mocha_istanbul:coverage', 'clean:package']);
+    grunt.registerTask('jenkins', ['initTest', 'mochaTest:jenkins', 'mocha_istanbul:coverage']);
 
 }
 
