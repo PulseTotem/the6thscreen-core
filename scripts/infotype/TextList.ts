@@ -3,7 +3,7 @@
  */
 
 /// <reference path="./Info.ts" />
-/// <reference path="./Textinfo.ts" />
+/// <reference path="./TextInfo.ts" />
 /// <reference path="./exceptions/InfoException.ts" />
 
 class TextList extends Info {
