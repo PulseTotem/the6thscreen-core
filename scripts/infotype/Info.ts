@@ -18,8 +18,15 @@ class Info {
     private _serviceLogo : string;
     private _serviceName : string;
 
-	constructor(id : string = "noId", priority : number = InfoPriority.LOW, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = Info.DEFAULT_DURATION, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "") {
+	/**
+	 * Channel of Call attached to Info.
+	 *
+	 * @property _callChannel
+	 * @type string
+	 */
+	private _callChannel : string;
 
+	constructor(id : string = "noId", priority : number = InfoPriority.LOW, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = Info.DEFAULT_DURATION, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "") {
         this.setId(id);
         this.setPriority(priority);
         this.setCreationDate(creationDate);
@@ -93,6 +100,26 @@ class Info {
     setServiceName(serviceName : string) {
         this._serviceName = serviceName;
     }
+
+	/**
+	 * Return channel of Call attached to Info.
+	 *
+	 * @method getCallChannel
+	 * @returns {string} call channel.
+	 */
+	getCallChannel() : string {
+		return this._callChannel;
+	}
+
+	/**
+	 * Set channel of Call attached to Info.
+	 *
+	 * @method setCallChannel
+	 * @param {string} callChannel - channel of call.
+	 */
+	setCallChannel(callChannel : string) {
+		this._callChannel = callChannel;
+	}
 
     static getInfoFromJSONObject<T extends Info>(jsonObject : any, type: any ) : T {
         if (typeof(jsonObject._id) == "undefined") {
