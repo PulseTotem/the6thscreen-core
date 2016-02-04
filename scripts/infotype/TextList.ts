@@ -12,10 +12,10 @@ class TextList extends Info {
 	 * TextList's texts.
 	 *
 	 * @property _texts
-	 * @type Array<Textinfo>
+	 * @type Array<TextInfo>
 	 * @private
 	 */
-	private _texts : Array<Textinfo>;
+	private _texts : Array<TextInfo>;
 
 	/**
 	 * Constructor.
@@ -23,7 +23,7 @@ class TextList extends Info {
 	 * @constructor
 	 */
 	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
-				texts : Array<Textinfo> = new Array<Textinfo>()) {
+				texts : Array<TextInfo> = new Array<TextInfo>()) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 		this._texts = texts;
 	}
@@ -32,9 +32,9 @@ class TextList extends Info {
 	 * Returns TextList's texts.
 	 *
 	 * @method getTexts
-	 * @returns {Array<Textinfo>} The TextList's texts.
+	 * @returns {Array<TextInfo>} The TextList's texts.
 	 */
-	getTexts() : Array<Textinfo> {
+	getTexts() : Array<TextInfo> {
 		return this._texts;
 	}
 
@@ -42,9 +42,9 @@ class TextList extends Info {
 	 * Added a Text to TextList.
 	 *
 	 * @method addText
-	 * @param {Textinfo} text - The feedNode to add.
+	 * @param {TextInfo} text - The feedNode to add.
 	 */
-	addText(text : Textinfo) {
+	addText(text : TextInfo) {
 		this._texts.push(text);
 	}
 
@@ -90,7 +90,7 @@ class TextList extends Info {
 
 		for(var i = 0; i < jsonObject._texts.length; i++) {
 			var cDesc = jsonObject._texts[i];
-			var c : Textinfo = Textinfo.fromJSONObject(cDesc);
+			var c : TextInfo = TextInfo.fromJSONObject(cDesc);
 			cl.addText(c);
 		}
 
@@ -110,10 +110,10 @@ class TextList extends Info {
 		} else {
 			var equalStatus = true;
 
-			this.getTexts().forEach(function (text : Textinfo) {
+			this.getTexts().forEach(function (text : TextInfo) {
 				var existEqual = false;
 
-				info.getTexts().forEach(function(otherText : Textinfo) {
+				info.getTexts().forEach(function(otherText : TextInfo) {
 					if(!existEqual) {
 						existEqual = text.equals(otherText);
 					}
