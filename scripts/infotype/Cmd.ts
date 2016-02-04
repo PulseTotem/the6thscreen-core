@@ -34,6 +34,8 @@ class Cmd extends Info {
 	            cmd : string = "", args : Array<string> = new Array<string>()) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
+		this.setClassName("Cmd");
+
 		this._cmd = cmd;
 		this._args = args;
 	}

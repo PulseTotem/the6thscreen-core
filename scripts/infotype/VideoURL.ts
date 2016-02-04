@@ -64,6 +64,8 @@ class VideoURL extends Info {
 				title : string = "", description : string = "", url : string = null, videoType : VideoType = null, thumbnail : Picture = null) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
+		this.setClassName("VideoURL");
+
 		this.setTitle(title);
 		this.setDescription(description);
 		this.setURL(url);

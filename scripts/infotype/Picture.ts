@@ -110,6 +110,8 @@ class Picture extends Info {
 				large : PictureURL = null, thumb : PictureURL = null, orientation : string = null, tags : Array<Tag> = new Array<Tag>(), owner : User = null) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
+		this.setClassName("Picture");
+
 		this._title = title;
 		this._description = description;
 		this._original = original;

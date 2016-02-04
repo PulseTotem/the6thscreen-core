@@ -9,6 +9,8 @@
 class Info {
     public static DEFAULT_DURATION = 10;
 
+	private _className : string;
+
 	private _id : string;
 	private _priority : number;
 	private _creationDate : Date;
@@ -35,6 +37,14 @@ class Info {
         this.setCastingDate(castingDate);
         this.setServiceLogo(serviceLogo);
         this.setServiceName(serviceName);
+	}
+
+	getClassName() {
+		return this._className;
+	}
+
+	setClassName(className : string) {
+		this._className = className;
 	}
 
     getId() {

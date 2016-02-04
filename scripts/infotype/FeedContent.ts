@@ -70,6 +70,9 @@ class FeedContent extends Info {
     constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
                 title : string = null, description : string = null, url : string = null, langage : string = null, logo : string = null, feedNodes : Array<FeedNode> = new Array<FeedNode>()) {
         super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
+
+		this.setClassName("FeedContent");
+
         this._title = title;
         this._description = description;
         this._url = url;

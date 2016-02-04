@@ -34,6 +34,8 @@ class DateTime extends Info {
 	            date : Date = null, description : string = "") {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
+		this.setClassName("DateTime");
+
 		this._date = date;
 		this._description = description;
 	}

@@ -97,6 +97,8 @@ class EventList extends Info {
 	            name : string = "", description : string = "", events : Array<EventCal> = new Array<EventCal>()) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
+		this.setClassName("EventList");
+
 		this.setName(name);
 		this.setDescription(description);
 		this._events = events;

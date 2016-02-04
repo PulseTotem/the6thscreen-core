@@ -25,6 +25,9 @@ class TagList extends Info {
 	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
 				tags : Array<Tag> = new Array<Tag>()) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
+
+		this.setClassName("TagList");
+
 		this._tags = tags;
 	}
 

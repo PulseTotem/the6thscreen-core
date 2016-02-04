@@ -34,6 +34,8 @@ class Tag extends Info {
 				name : string = null, popularity : number = 0) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
+		this.setClassName("Tag");
+
 		this._name = name;
 		this._popularity = popularity;
 	}

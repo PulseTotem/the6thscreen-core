@@ -100,6 +100,8 @@ class Tweet extends Info {
 				pictures : Array<Picture> = new Array<Picture>(), hashtags : Array<Tag> = new Array<Tag>(), originalTweet : Tweet = null) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
+		this.setClassName("Tweet");
+
 		this.setOwner(owner);
 		this.setMessage(message);
 		this.setFavoriteCount(favoriteCount);

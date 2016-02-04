@@ -53,6 +53,8 @@ class User extends Info {
 				username : string = null, realname : string = null, location : string = null, profilPicture : string = null) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
+		this.setClassName("User");
+
 		this._username = username;
 		this._realname = realname;
 		this._location = location;

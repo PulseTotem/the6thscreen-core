@@ -25,6 +25,8 @@ class TextInfo extends Info {
 				value : string = null) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
+		this.setClassName("TextInfo");
+
 		this._value = value;
 	}
 

@@ -25,6 +25,9 @@ class TweetList extends Info {
 	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
 				tweets : Array<Tweet> = new Array<Tweet>()) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
+
+		this.setClassName("TweetList");
+
 		this._tweets = tweets;
 	}
 

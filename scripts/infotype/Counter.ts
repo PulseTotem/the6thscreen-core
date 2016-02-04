@@ -25,6 +25,8 @@ class Counter extends Info {
 				counterValue : number = 0) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
+		this.setClassName("Counter");
+
 		this.setValue(counterValue);
 	}
 

@@ -78,6 +78,8 @@ class Discount extends Info {
                 type : number = null, value : number = null, productId : string = null, productName : string = null, productBarCode : string = null, productImage : string = null, productDescription : string = null) {
         super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
+		this.setClassName("Discount");
+
         this._type = type;
         this._value = value;
         this._productId = productId;

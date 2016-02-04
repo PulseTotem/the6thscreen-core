@@ -146,6 +146,8 @@ class EventCal extends Info {
 	            start : Date = null, end : Date = null, name : string = null, description : string = null, location : string = null) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
+		this.setClassName("EventCal");
+
 		this.setStart(start);
 		this.setEnd(end);
 		this.setName(name);

@@ -25,6 +25,9 @@ class PictureAlbum extends Info {
 	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
 				pictures : Array<Picture> = new Array<Picture>()) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
+
+		this.setClassName("PictureAlbum");
+
 		this._pictures = pictures;
 	}
 

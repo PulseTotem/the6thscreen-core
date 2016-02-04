@@ -43,6 +43,8 @@ class PictureURL extends Info {
 				url : string = null, width : number = 0, height : number = 0) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
+		this.setClassName("PictureURL");
+
 		this._url = url;
 		this._width = width;
 		this._height = height;

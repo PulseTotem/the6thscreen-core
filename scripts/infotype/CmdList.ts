@@ -28,6 +28,8 @@ class CmdList extends Info {
 	            cmds : Array<Cmd> = new Array<Cmd>()) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
+		this.setClassName("CmdList");
+
 		this._cmds = cmds;
 	}
 

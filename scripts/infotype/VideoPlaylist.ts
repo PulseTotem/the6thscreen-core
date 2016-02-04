@@ -55,6 +55,8 @@ class VideoPlaylist extends Info {
 				title : string = "", description : string = "", thumbnail : Picture = null, videos : Array<VideoURL> = new Array<VideoURL>()) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
+		this.setClassName("VideoPlaylist");
+
 		this.setTitle(title);
 		this.setDescription(description);
 		this.setThumbnail(thumbnail);
