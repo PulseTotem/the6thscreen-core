@@ -240,10 +240,26 @@ class VideoURL extends Info {
 	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
 	 */
 	equals(info : VideoURL) : boolean {
-		return this.getTitle() == info.getTitle() &&
+		var firstCheck = this.getTitle() == info.getTitle() &&
 			this.getDescription() == info.getDescription() &&
 			this.getType() == info.getType() &&
-			this.getURL() == info.getURL() &&
-			this.getThumbnail().equals(info.getThumbnail());
+			this.getURL() == info.getURL();
+
+		if(firstCheck) {
+
+			var equalStatus = true;
+
+			if(this.getThumbnail() != null && info.getThumbnail() != null) {
+				equalStatus = equalStatus && this.getThumbnail().equals(info.getThumbnail());
+			} else {
+				if(this.getThumbnail() != null || info.getThumbnail() != null) {
+					return false;
+				}
+			}
+
+			return equalStatus;
+		} else {
+			return false;
+		}
 	}
 }

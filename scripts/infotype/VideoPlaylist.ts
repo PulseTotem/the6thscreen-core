@@ -220,31 +220,33 @@ class VideoPlaylist extends Info {
 
 		if(firstCheck) {
 
-			if(this.getThumbnail().equals(info.getThumbnail())) {
+			var equalStatus = true;
 
-				if (this.getVideos().length != info.getVideos().length) {
+			if(this.getThumbnail() != null && info.getThumbnail() != null) {
+				equalStatus = equalStatus && this.getThumbnail().equals(info.getThumbnail());
+			} else {
+				if(this.getThumbnail() != null || info.getThumbnail() != null) {
 					return false;
-				} else {
-					var equalStatus = true;
+				}
+			}
 
-					this.getVideos().forEach(function (video:VideoURL) {
-						var existEqual = false;
+			if(this.getVideos().length != info.getVideos().length) {
+				return false;
+			} else {
+				this.getVideos().forEach(function (video:VideoURL) {
+					var existEqual = false;
 
-						info.getVideos().forEach(function (otherVideo:VideoURL) {
-							if (!existEqual) {
-								existEqual = video.equals(otherVideo);
-							}
-						});
-
-						equalStatus = equalStatus && existEqual;
+					info.getVideos().forEach(function (otherVideo:VideoURL) {
+						if (!existEqual) {
+							existEqual = video.equals(otherVideo);
+						}
 					});
 
-					return equalStatus;
-				}
-
-			} else {
-				return false;
+					equalStatus = equalStatus && existEqual;
+				});
 			}
+
+			return equalStatus;
 		} else {
 			return false;
 		}
