@@ -357,13 +357,19 @@ class Tweet extends Info {
 
 		var t : Tweet = new Tweet(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName);
 
-		t.setOwner(User.fromJSONObject(jsonObject._owner));
 		t.setMessage(jsonObject._message);
 		t.setFavoriteCount(jsonObject._favoriteCount);
 		t.setRetweetCount(jsonObject._retweetCount);
 		t.setLang(jsonObject._lang);
 		t.setSensitive(jsonObject._sensitive);
-		t.setOriginalTweet(jsonObject._originalTweet);
+
+		if(jsonObject._owner != null) {
+			t.setOwner(User.fromJSONObject(jsonObject._owner));
+		}
+
+		if(jsonObject._originalTweet != null) {
+			t.setOriginalTweet(Tweet.fromJSONObject(jsonObject._originalTweet));
+		}
 
 		for(var i = 0; i < jsonObject._pictures.length; i++) {
 			var pDesc = jsonObject._pictures[i];
