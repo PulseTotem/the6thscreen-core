@@ -160,7 +160,7 @@ class Tweet extends Info {
 	 * @returns {number} The Tweet's favoriteCount.
 	 */
 	getFavoriteCount() : number {
-		return this._favoriteCount;
+		return this.getSocialStats().favoriteCount();
 	}
 
 	/**
@@ -171,6 +171,7 @@ class Tweet extends Info {
 	 */
 	setFavoriteCount(favoriteCount : number) {
 		this._favoriteCount = favoriteCount;
+		this.getSocialStats().setFavoriteCount(favoriteCount);
 	}
 
 	/**
@@ -180,7 +181,7 @@ class Tweet extends Info {
 	 * @returns {number} The Tweet's retweetCount.
 	 */
 	getRetweetCount() : number {
-		return this._retweetCount;
+		return this.getSocialStats().shareCount();
 	}
 
 	/**
@@ -191,6 +192,7 @@ class Tweet extends Info {
 	 */
 	setRetweetCount(retweetCount : number) {
 		this._retweetCount = retweetCount;
+		this.getSocialStats().setShareCount(retweetCount);
 	}
 
 	/**
@@ -394,11 +396,10 @@ class Tweet extends Info {
 	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
 	 */
 	equals(info : Tweet) : boolean {
-		var firstCheck = this.getFavoriteCount() == info.getFavoriteCount() &&
-				this.getLang() == info.getLang() &&
+		var firstCheck = this.getLang() == info.getLang() &&
 				this.getMessage() == info.getMessage() &&
-				this.getRetweetCount() == info.getRetweetCount() &&
-				this.getSensitive() == info.getSensitive();
+				this.getSensitive() == info.getSensitive() &&
+				this.getSocialStats().equals(info.getSocialStats());
 
 		if(firstCheck) {
 			var equalStatus = true;
