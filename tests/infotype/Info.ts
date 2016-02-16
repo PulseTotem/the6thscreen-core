@@ -57,12 +57,30 @@ describe('Info', function() {
 				"_durationToDisplay": 42,
 				"_castingDate": new Date(),
 				"_serviceLogo": "blorf",
-				"_serviceName": "blarf"
+				"_serviceName": "blarf",
+				"_socialStats": {
+					"_viewCount" : 23,
+					"_likeCount" : 24,
+					"_dislikeCount" : 25,
+					"_favoriteCount" : 28,
+					"_commentCount" : 26,
+					"_shareCount" : 27
+				}
 			};
 
 			var info : Info = Info.getInfoFromJSONObject<Info>(json, Info);
 
+
+
 			var expectedInfo = new Info(json._id, json._priority, json._creationDate, json._obsoleteDate, json._durationToDisplay, json._castingDate, json._serviceLogo, json._serviceName);
+
+			expectedInfo.getSocialStats().setViewCount(23);
+			expectedInfo.getSocialStats().setLikeCount(24);
+			expectedInfo.getSocialStats().setDislikeCount(25);
+			expectedInfo.getSocialStats().setFavoriteCount(28);
+			expectedInfo.getSocialStats().setCommentCount(26);
+			expectedInfo.getSocialStats().setShareCount(27);
+
 			assert.deepEqual(info, expectedInfo, "The obtained info is not same as expected");
 		});
 

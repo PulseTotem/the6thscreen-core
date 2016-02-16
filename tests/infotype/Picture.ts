@@ -137,11 +137,25 @@ describe('Picture', function() {
 				"_thumb": thumb,
 				"_orientation": orientation,
 				"_tags": tags,
-				"_owner": owner
+				"_owner": owner,
+				"_socialStats": {
+					"_viewCount" : 23,
+					"_likeCount" : 24,
+					"_dislikeCount" : 25,
+					"_favoriteCount" : 28,
+					"_commentCount" : 26,
+					"_shareCount" : 27
+				}
 			};
 
 			var expectedPic : Picture = new Picture(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName,
 				title, description, original, small, medium, large, thumb, orientation, tags, owner);
+			expectedPic.getSocialStats().setViewCount(23);
+			expectedPic.getSocialStats().setLikeCount(24);
+			expectedPic.getSocialStats().setDislikeCount(25);
+			expectedPic.getSocialStats().setFavoriteCount(28);
+			expectedPic.getSocialStats().setCommentCount(26);
+			expectedPic.getSocialStats().setShareCount(27);
 
 			var pic : Picture = Picture.fromJSONObject(json);
 

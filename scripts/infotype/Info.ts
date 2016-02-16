@@ -1,10 +1,11 @@
 /**
- * @author Christian Brel <christian@the6thscreen.fr, ch.brel@gmail.com>
- * @author Simon Urli <simon@the6thscreen.fr>
+ * @author Christian Brel <christian@pulsetotem.fr, ch.brel@gmail.com>
+ * @author Simon Urli <simon@pulsetotem.fr>
  */
 
 /// <reference path="./priorities/InfoPriority.ts" />
 /// <reference path="./exceptions/InfoException.ts" />
+/// <reference path="./SocialStats.ts" />
 
 class Info {
     public static DEFAULT_DURATION = 10;
@@ -19,6 +20,15 @@ class Info {
 	private _durationToDisplay : number;
     private _serviceLogo : string;
     private _serviceName : string;
+
+	/**
+	 * Info's SocialStats.
+	 *
+	 * @property _socialStats
+	 * @type SocialStats
+	 * @private
+	 */
+	private _socialStats : SocialStats;
 
 	/**
 	 * Channel of Call attached to Info.
@@ -37,6 +47,8 @@ class Info {
         this.setCastingDate(castingDate);
         this.setServiceLogo(serviceLogo);
         this.setServiceName(serviceName);
+
+		this._socialStats = new SocialStats();
 	}
 
 	getClassName() {
@@ -131,31 +143,54 @@ class Info {
 		this._callChannel = callChannel;
 	}
 
+	/**
+	 * Return Info's SocialStats.
+	 *
+	 * @method getSocialStats
+	 * @returns {SocialStats} Info's SocialStats.
+	 */
+	getSocialStats() : SocialStats {
+		return this._socialStats;
+	}
+
+	/**
+	 * Set Info's SocialStats.
+	 *
+	 * @method setSocialStats
+	 * @param {SocialStats} callChannel - new Info's SocialStats.
+	 */
+	setSocialStats(socialStats : SocialStats) {
+		this._socialStats = socialStats;
+	}
+
     static getInfoFromJSONObject<T extends Info>(jsonObject : any, type: any ) : T {
         if (typeof(jsonObject._id) == "undefined") {
-            throw new InfoException("A Picture object should have an ID.");
+            throw new InfoException("An Info object should have an ID.");
         }
         if(typeof(jsonObject._priority) == "undefined") {
-            throw new InfoException("A Picture object should have a priority.");
+            throw new InfoException("An Info object should have a priority.");
         }
         if(typeof(jsonObject._creationDate) == "undefined") {
-            throw new InfoException("A Picture object should have a creationDate.");
+            throw new InfoException("An Info object should have a creationDate.");
         }
         if(typeof(jsonObject._castingDate) == "undefined") {
-            throw new InfoException("A Picture object should have a castingDate.");
+            throw new InfoException("An Info object should have a castingDate.");
         }
         if(typeof(jsonObject._obsoleteDate) == "undefined") {
-            throw new InfoException("A Picture object should have an obsoleteDate.");
+            throw new InfoException("An Info object should have an obsoleteDate.");
         }
         if(typeof(jsonObject._durationToDisplay) == "undefined") {
-            throw new InfoException("A Picture object should have a durationToDisplay.");
+            throw new InfoException("An Info object should have a durationToDisplay.");
         }
         if(typeof(jsonObject._serviceLogo) == "undefined") {
-            throw new InfoException("A Picture object should have a serviceLogo.");
+            throw new InfoException("An Info object should have a serviceLogo.");
         }
         if(typeof(jsonObject._serviceName) == "undefined") {
-            throw new InfoException("A Picture object should have a serviceName.");
+            throw new InfoException("An Info object should have a serviceName.");
         }
+		if(typeof(jsonObject._socialStats) == "undefined") {
+			throw new InfoException("An Info object should have socialStats.");
+		}
 
         var result = new type();
         result.setId(jsonObject._id);
@@ -166,6 +201,7 @@ class Info {
         result.setDurationToDisplay(jsonObject._durationToDisplay);
         result.setServiceLogo(jsonObject._serviceLogo);
         result.setServiceName(jsonObject._serviceName);
+		result.setSocialStats(SocialStats.fromJSONObject(jsonObject._socialStats));
         return result;
     }
 
