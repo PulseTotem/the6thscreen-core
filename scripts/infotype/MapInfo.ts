@@ -5,7 +5,7 @@
 /// <reference path="./Info.ts" />
 /// <reference path="./MapType.ts" />
 
-class Map extends Info {
+class MapInfo extends Info {
 
     /**
      * Adress of the center point of the map
@@ -260,8 +260,8 @@ class Map extends Info {
      * @param {JSONObject} json - The JSON Object
      * @return {Map} The map instance.
      */
-    static fromJSONObject(jsonObject : any) : Map {
-        var map : Map = Info.getInfoFromJSONObject<Map>(jsonObject, Map);
+    static fromJSONObject(jsonObject : any) : MapInfo {
+        var map : MapInfo = Info.getInfoFromJSONObject<MapInfo>(jsonObject, MapInfo);
 
         if(typeof(jsonObject._address) == "undefined") {
             throw new InfoException("A Map object should have an address.");
@@ -307,7 +307,7 @@ class Map extends Info {
      * @param {Info} info - Info to update.
      * @return {boolean} 'true' if objects are equals, 'false' otherwise
      */
-    equals(info : Map) : boolean {
+    equals(info : MapInfo) : boolean {
         return ( this.getAddress() == info.getAddress() &&
                     this.getLatitude() == info.getLatitude() &&
                     this.getLongitude() == info.getLongitude() &&

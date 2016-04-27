@@ -3,7 +3,7 @@
  */
 
 /// <reference path="./Info.ts" />
-/// <reference path="./Map.ts" />
+/// <reference path="./MapInfo.ts" />
 
 class MapList extends Info {
     /**
@@ -13,7 +13,7 @@ class MapList extends Info {
      * @type Array<Map>
      * @private
      */
-    private _maps : Array<Map>;
+    private _maps : Array<MapInfo>;
 
     /**
      * Constructor.
@@ -21,7 +21,7 @@ class MapList extends Info {
      * @constructor
      */
     constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
-                maps : Array<Map> = new Array<Map>()) {
+                maps : Array<MapInfo> = new Array<MapInfo>()) {
         super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
         this.setClassName("MapList");
@@ -35,7 +35,7 @@ class MapList extends Info {
      * @method getMaps
      * @returns {Array<Map>} The MapList's maps.
      */
-    getMaps() : Array<Map> {
+    getMaps() : Array<MapInfo> {
         return this._maps;
     }
 
@@ -45,7 +45,7 @@ class MapList extends Info {
      * @method addMap
      * @param {Map} map - The map to add.
      */
-    addMap(map : Map) {
+    addMap(map : MapInfo) {
         this._maps.push(map);
     }
 
@@ -66,7 +66,7 @@ class MapList extends Info {
 
         for (var i = 0; i < jsonObject._maps.length; i++) {
             var cMap = jsonObject._maps[i];
-            var map = Map.fromJSONObject(cMap);
+            var map = MapInfo.fromJSONObject(cMap);
 
             mapList.addMap(map);
         }
@@ -87,10 +87,10 @@ class MapList extends Info {
         } else {
             var equalStatus = true;
 
-            this.getMaps().forEach(function (map : Map) {
+            this.getMaps().forEach(function (map : MapInfo) {
                 var existEqual = false;
 
-                info.getMaps().forEach(function(otherMap : Map) {
+                info.getMaps().forEach(function(otherMap : MapInfo) {
                     if(!existEqual) {
                         existEqual = map.equals(otherMap);
                     }
