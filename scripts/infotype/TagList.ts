@@ -18,12 +18,30 @@ class TagList extends Info {
 	private _tags : Array<Tag>;
 
 	/**
+	 * TagList's query.
+	 *
+	 * @property _query
+	 * @type string
+	 * @private
+	 */
+	private _query : string;
+
+	/**
+	 * TagList's since
+	 *
+	 * @property _since
+	 * @type Date
+	 * @private
+	 */
+	private _since : Date;
+
+	/**
 	 * Constructor.
 	 *
 	 * @constructor
 	 */
 	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
-				tags : Array<Tag> = new Array<Tag>()) {
+				tags : Array<Tag> = new Array<Tag>(), query : string = "", since : Date = null) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
 		this.setClassName("TagList");
@@ -49,6 +67,46 @@ class TagList extends Info {
 	 */
 	addTag(tag : Tag) {
 		this._tags.push(tag);
+	}
+
+	/**
+	 * Returns TagList's query
+	 *
+	 * @method getQuery
+	 * @returns {string} The query
+     */
+	getQuery() : string {
+		return this._query;
+	}
+
+	/**
+	 * Set the query value
+	 *
+	 * @method setQuery
+	 * @param query
+     */
+	setQuery(query : string) {
+		this._query = query;
+	}
+
+	/**
+	 * Returns the TagList's since date
+	 *
+	 * @method getSince
+	 * @returns {Date}
+     */
+	getSince() : Date {
+		return this._since;
+	}
+
+	/**
+	 * Set the since date
+	 *
+	 * @method setSince
+	 * @param since
+     */
+	setSince(since : Date) {
+		this._since = since;
 	}
 
 	/**
@@ -88,6 +146,12 @@ class TagList extends Info {
 		if(typeof(jsonObject._tags) == "undefined") {
 			throw new InfoException("A TagList object should have tags.");
 		}
+		if(typeof(jsonObject._since) == "undefined") {
+			throw new InfoException("A TagList object should have since date.");
+		}
+		if(typeof(jsonObject._query) == "undefined") {
+			throw new InfoException("A TagList object should have query.");
+		}
 
 		var cl : TagList = new TagList(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName);
 
@@ -96,6 +160,9 @@ class TagList extends Info {
 			var c : Tag = Tag.fromJSONObject(cDesc);
 			cl.addTag(c);
 		}
+
+		cl.setQuery(jsonObject._query);
+		cl.setSince(jsonObject._since);
 
 		return cl;
 	}
@@ -108,7 +175,7 @@ class TagList extends Info {
 	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
 	 */
 	equals(info : TagList) : boolean {
-		if(this.getTags().length != info.getTags().length) {
+		if(this.getTags().length != info.getTags().length && this.getQuery() != info.getQuery() && this.getSince() != info.getSince()) {
 			return false;
 		} else {
 			var equalStatus = true;
