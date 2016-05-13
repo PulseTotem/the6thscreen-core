@@ -17,12 +17,30 @@ class Counter extends Info {
 	private _counterValue : number;
 
 	/**
+	 * Counter's query
+	 *
+	 * @property _query
+	 * @type string
+	 * @private
+	 */
+	private _query : string;
+
+	/**
+	 * Counter's Since value
+	 *
+	 * @property _since
+	 * @type Date
+	 * @private
+	 */
+	private _since : Date;
+
+	/**
 	 * Constructor.
 	 *
 	 * @constructor
 	 */
 	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
-				counterValue : number = 0) {
+				counterValue : number = 0, query : string = "", since : Date = null) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
 		this.setClassName("Counter");
@@ -48,6 +66,44 @@ class Counter extends Info {
 	 */
 	setValue(counterValue : number) {
 		this._counterValue = counterValue;
+	}
+
+	/**
+	 * Returns Counter's query
+	 *
+	 * @method getQuery
+	 * @returns {string} The counter's query
+     */
+	getQuery() : string {
+		return this._query;
+	}
+
+	/**
+	 * Set the Counter's query
+	 *
+	 * @method setQuery
+	 * @param query
+     */
+	setQuery(query : string) {
+		this._query = query;
+	}
+
+	/**
+	 * Returns Counter's since date
+	 *
+	 * @method getSince
+	 * @returns {Date} The counter's since
+     */
+	getSince() : Date {
+		return this._since;
+	}
+
+	/**
+	 * Set the Counter's since date
+	 * @param since
+     */
+	setSince(since : Date) {
+		this._since = since;
 	}
 
 	/**
@@ -87,10 +143,19 @@ class Counter extends Info {
 		if(typeof(jsonObject._counterValue) == "undefined") {
 			throw new InfoException("A Counter object should have a value.");
 		}
+		if(typeof(jsonObject._since) == "undefined") {
+			throw new InfoException("A Counter object should have a since date.");
+		}
+
+		if(typeof(jsonObject._query) == "undefined") {
+			throw new InfoException("A Counter object should have a query.");
+		}
 
 		var c : Counter = new Counter(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName);
 
 		c.setValue(jsonObject._counterValue);
+		c.setQuery(jsonObject._query);
+		c.setSince(jsonObject._since);
 
 		return c;
 	}
@@ -103,6 +168,6 @@ class Counter extends Info {
 	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
 	 */
 	equals(info : Counter) : boolean {
-		return this.getValue() == info.getValue();
+		return this.getValue() == info.getValue() && this.getQuery() == info.getQuery() && this.getSince() == info.getSince();
 	}
 }
