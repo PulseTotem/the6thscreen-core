@@ -3,6 +3,7 @@
  */
 
 /// <reference path="./Info.ts" />
+/// <reference path="./PulseFrequency.ts" />
 /// <reference path="./exceptions/InfoException.ts" />
 
 class PulseInfo extends Info {
@@ -17,17 +18,35 @@ class PulseInfo extends Info {
     private _value : number;
 
     /**
+     * PulseInfo's unity (e.g. : tweets)
+     * @type string
+     * @private
+     */
+    private _unity : string;
+
+    /**
+     * PulseInfo's frequency
+     *
+     * @property _frequency
+     * @type PulseFrequency
+     * @private
+     */
+    private _frequency : PulseFrequency;
+
+    /**
      * Constructor.
      *
      * @constructor
      */
     constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
-                value : number = null) {
+                value : number = null, unity : string = "", frequency : PulseFrequency = null) {
         super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
         this.setClassName("PulseInfo");
 
-        this._value = value;
+        this.setValue(value);
+        this.setUnity(unity);
+        this.setFrequency(frequency);
     }
 
     /**
@@ -48,6 +67,46 @@ class PulseInfo extends Info {
      */
     setValue(value : number) {
         this._value = value;
+    }
+
+    /**
+     * Return PulseInfo's unity
+     *
+     * @method getUnity
+     * @returns {string} The PulseInfo's unity
+     */
+    getUnity() : string {
+        return this._unity;
+    }
+
+    /**
+     * Set the PulseInfo's unity
+     *
+     * @method setUnity
+     * @param unity - The new unity
+     */
+    setUnity(unity : string) {
+        this._unity = unity;
+    }
+
+    /**
+     * Get PulseInfo's frequency
+     *
+     * @method getFrequency
+     * @returns {PulseFrequency}
+     */
+    getFrequency() : PulseFrequency {
+        return this._frequency;
+    }
+
+    /**
+     * Set the PulseInfo's frequency
+     *
+     * @method setFrequency
+     * @param frequency
+     */
+    setFrequency(frequency : PulseFrequency) {
+        this._frequency = frequency;
     }
 
     /**
@@ -87,9 +146,15 @@ class PulseInfo extends Info {
         if(typeof(jsonObject._value) == "undefined") {
             throw new InfoException("A PulseInfo object should have a value.");
         }
+        if(typeof(jsonObject._frequency) == "undefined") {
+            throw new InfoException("A PulseInfo object should have a frequency.");
+        }
+        if(typeof(jsonObject._unity) == "undefined") {
+            throw new InfoException("A PulseInfo object should have a unity.");
+        }
 
         var t : PulseInfo = new PulseInfo(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName,
-            jsonObject._value);
+            jsonObject._value, jsonObject._unity, jsonObject._frequency);
 
         return t;
     }
@@ -102,6 +167,6 @@ class PulseInfo extends Info {
      * @return {boolean} 'true' if objects are equals, 'false' otherwise
      */
     equals(info : PulseInfo) : boolean {
-        return this.getValue() == info.getValue();
+        return this.getValue() == info.getValue() && this.getUnity() == info.getUnity() && this.getFrequency() == info.getFrequency();
     }
 }
