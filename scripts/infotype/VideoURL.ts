@@ -56,12 +56,21 @@ class VideoURL extends Info {
 	private _type : VideoType;
 
 	/**
+	 * VideoURL's mute.
+	 *
+	 * @property _mute
+	 * @type boolean
+	 * @private
+	 */
+	private _mute : boolean;
+
+	/**
 	 * Constructor.
 	 *
 	 * @constructor
 	 */
 	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10000, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
-				title : string = "", description : string = "", url : string = null, videoType : VideoType = null, thumbnail : Picture = null) {
+				title : string = "", description : string = "", url : string = null, videoType : VideoType = null, thumbnail : Picture = null, mute : boolean = false) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
 		this.setClassName("VideoURL");
@@ -72,6 +81,8 @@ class VideoURL extends Info {
 		this.setType(videoType);
 
 		this.setThumbnail(thumbnail);
+
+		this.setMute(mute);
 	}
 
 	/**
@@ -173,6 +184,26 @@ class VideoURL extends Info {
 	}
 
 	/**
+	 * Returns VideoURL's mute.
+	 *
+	 * @method getMute
+	 * @returns {boolean} The VideoURL's mute.
+	 */
+	getMute() : boolean {
+		return this._mute;
+	}
+
+	/**
+	 * Set the VideoURL's mute.
+	 *
+	 * @method setMute
+	 * @param {boolean} mute - The new VideoURL's mute.
+	 */
+	setMute(mute : boolean) {
+		this._mute = mute;
+	}
+
+	/**
 	 * Return a VideoURL instance from a JSON Object.
 	 *
 	 * @method fromJSONObject
@@ -221,9 +252,12 @@ class VideoURL extends Info {
 		if(typeof(jsonObject._type) == "undefined") {
 			throw new InfoException("A VideoURL object should have a type.");
 		}
+		if(typeof(jsonObject._mute) == "undefined") {
+			throw new InfoException("A VideoURL object should have a mute.");
+		}
 
 		var v : VideoURL = new VideoURL(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName,
-			jsonObject._title, jsonObject._description, jsonObject._url, jsonObject._type);
+			jsonObject._title, jsonObject._description, jsonObject._url, jsonObject._type, null, jsonObject._mute);
 
 		if(jsonObject._thumbnail != null) {
 			v.setThumbnail(Picture.fromJSONObject(jsonObject._thumbnail));
@@ -243,7 +277,8 @@ class VideoURL extends Info {
 		var firstCheck = this.getTitle() == info.getTitle() &&
 			this.getDescription() == info.getDescription() &&
 			this.getType() == info.getType() &&
-			this.getURL() == info.getURL();
+			this.getURL() == info.getURL() &&
+			this.getMute() == info.getMute();
 
 		if(firstCheck) {
 
