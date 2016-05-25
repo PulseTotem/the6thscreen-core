@@ -46,6 +46,8 @@ class Counter extends Info {
 		this.setClassName("Counter");
 
 		this.setValue(counterValue);
+		this.setQuery(query);
+		this.setSince(since);
 	}
 
 	/**
