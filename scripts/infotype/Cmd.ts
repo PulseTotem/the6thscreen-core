@@ -81,6 +81,16 @@ class Cmd extends Info {
 	}
 
 	/**
+	 * Push an argument
+	 *
+	 * @method pushArg
+	 * @param arg
+     */
+	pushArg(arg : string) {
+		this._args.push(arg);
+	}
+
+	/**
 	 * Return a Cmd instance from a JSON Object.
 	 *
 	 * @method fromJSONObject
