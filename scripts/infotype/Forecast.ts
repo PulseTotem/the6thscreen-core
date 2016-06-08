@@ -157,8 +157,10 @@ class Forecast extends Info {
 			throw new InfoException("A Forecast object should have next days weathers.");
 		}
 
-		var f : Forecast = new Forecast(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName,
-										jsonObject._current);
+		var f : Forecast = new Forecast(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName);
+
+		var current = Weather.fromJSONObject(jsonObject._current);
+		f.setCurrent(current);
 
 		for(var i = 0; i < jsonObject._nextHours.length; i++) {
 			var wDesc = jsonObject._nextHours[i];
