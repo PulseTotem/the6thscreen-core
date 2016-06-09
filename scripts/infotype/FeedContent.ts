@@ -67,9 +67,12 @@ class FeedContent extends Info {
      *
      * @constructor
      */
-    constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
+    constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
                 title : string = null, description : string = null, url : string = null, langage : string = null, logo : string = null, feedNodes : Array<FeedNode> = new Array<FeedNode>()) {
-       super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
+        super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
+
+		this.setClassName("FeedContent");
+
         this._title = title;
         this._description = description;
         this._url = url;
@@ -225,6 +228,14 @@ class FeedContent extends Info {
         if(typeof(jsonObject._durationToDisplay) == "undefined") {
             throw new InfoException("A FeedContent object should have a durationToDisplay.");
         }
+        if(typeof(jsonObject._serviceLogo) == "undefined") {
+            throw new InfoException("A FeedContent object should have a serviceLogo.");
+        }
+        if(typeof(jsonObject._serviceName) == "undefined") {
+            throw new InfoException("A FeedContent object should have a serviceName.");
+        }
+
+
         if(typeof(jsonObject._title) == "undefined") {
             throw new InfoException("A FeedContent object should have a title.");
         }
@@ -243,7 +254,7 @@ class FeedContent extends Info {
         if(typeof(jsonObject._feedNodes) == "undefined") {
             throw new InfoException("A FeedContent object should have feedNodes.");
         }
-        var fc : FeedContent = new FeedContent(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate,
+        var fc : FeedContent = new FeedContent(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName,
                                 jsonObject._title, jsonObject._description, jsonObject._url, jsonObject._language, jsonObject._logo);
 
         for(var i = 0; i < jsonObject._feedNodes.length; i++) {
@@ -253,5 +264,49 @@ class FeedContent extends Info {
         }
 
         return fc;
+    }
+
+	/**
+	 * Check if 'this' is equal to info in param.
+	 *
+	 * @method equals
+	 * @param {Info} info - Info to update.
+	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
+	 */
+	equals(info : FeedContent) : boolean {
+		var firstCheck = this.getDescription() == info.getDescription() &&
+				this.getLanguage() == info.getLanguage() &&
+				this.getLogo() == info.getLogo() &&
+				this.getTitle() == info.getTitle() &&
+				this.getUrl() == info.getUrl();
+
+		if(firstCheck) {
+			if (this.getFeedNodes().length != info.getFeedNodes().length) {
+				return false;
+			} else {
+				var equalStatus = true;
+
+				this.getFeedNodes().forEach(function (fn:FeedNode) {
+					var existEqual = false;
+
+					info.getFeedNodes().forEach(function (otherFn:FeedNode) {
+						if (!existEqual) {
+							existEqual = fn.equals(otherFn);
+						}
+					});
+
+					equalStatus = equalStatus && existEqual;
+				});
+
+				return equalStatus;
+			}
+		} else {
+			return false;
+		}
+	}
+
+    propagateServiceInfo() {
+        var self = this;
+        Info.replaceServiceInfoInChildren(this._feedNodes, self);
     }
 }

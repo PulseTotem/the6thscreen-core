@@ -3,8 +3,12 @@
  * @author Christian Brel <christian@pulsetotem.fr, ch.brel@gmail.com>
  */
 
-enum VideoType {
-	HTML5,
-	DAILYMOTION,
-	YOUTUBE
+enum PulseFrequency {
+	SECONDLY,
+	MINUTELY,
+	HOURLY,
+	DAILY,
+	WEEKLY,
+	MONTHLY,
+	YEARLY
 }

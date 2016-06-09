@@ -39,9 +39,11 @@ class PictureURL extends Info {
 	 *
 	 * @constructor
 	 */
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
+	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
 				url : string = null, width : number = 0, height : number = 0) {
-		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
+		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
+
+		this.setClassName("PictureURL");
 
 		this._url = url;
 		this._width = width;
@@ -135,6 +137,12 @@ class PictureURL extends Info {
 		if(typeof(jsonObject._durationToDisplay) == "undefined") {
 			throw new InfoException("A PictureURL object should have a durationToDisplay.");
 		}
+		if(typeof(jsonObject._serviceLogo) == "undefined") {
+			throw new InfoException("A PictureURL object should have a serviceLogo.");
+		}
+		if(typeof(jsonObject._serviceName) == "undefined") {
+			throw new InfoException("A PictureURL object should have a serviceName.");
+		}
 
 		if(typeof(jsonObject._url) == "undefined") {
 			throw new InfoException("A PictureURL object should have an url.");
@@ -148,9 +156,22 @@ class PictureURL extends Info {
 			throw new InfoException("A PictureURL object should have a height.");
 		}
 
-		var p : PictureURL = new PictureURL(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate,
+		var p : PictureURL = new PictureURL(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName,
 			jsonObject._url, jsonObject._width, jsonObject._height);
 
 		return p;
+	}
+
+	/**
+	 * Check if 'this' is equal to info in param.
+	 *
+	 * @method equals
+	 * @param {Info} info - Info to update.
+	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
+	 */
+	equals(info : PictureURL) : boolean {
+		return this.getHeight() == info.getHeight() &&
+				this.getURL() == info.getURL() &&
+				this.getWidth() == info.getWidth();
 	}
 }

@@ -49,9 +49,11 @@ class User extends Info {
 	 *
 	 * @constructor
 	 */
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
+	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
 				username : string = null, realname : string = null, location : string = null, profilPicture : string = null) {
-		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
+		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
+
+		this.setClassName("User");
 
 		this._username = username;
 		this._realname = realname;
@@ -166,6 +168,12 @@ class User extends Info {
 		if(typeof(jsonObject._durationToDisplay) == "undefined") {
 			throw new InfoException("A User object should have a durationToDisplay.");
 		}
+		if(typeof(jsonObject._serviceLogo) == "undefined") {
+			throw new InfoException("A User object should have a serviceLogo.");
+		}
+		if(typeof(jsonObject._serviceName) == "undefined") {
+			throw new InfoException("A User object should have a serviceName.");
+		}
 
 		if(typeof(jsonObject._username) == "undefined") {
 			throw new InfoException("A User object should have a username.");
@@ -180,9 +188,23 @@ class User extends Info {
 			throw new InfoException("A User object should have a profilPicture.");
 		}
 
-		var u : User = new User(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate,
+		var u : User = new User(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName,
 			jsonObject._username, jsonObject._realname, jsonObject._location, jsonObject._profilPicture);
 
 		return u;
+	}
+
+	/**
+	 * Check if 'this' is equal to info in param.
+	 *
+	 * @method equals
+	 * @param {Info} info - Info to update.
+	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
+	 */
+	equals(info : User) : boolean {
+		return this.getLocation() == info.getLocation() &&
+				this.getProfilPicture() == info.getProfilPicture() &&
+				this.getRealname() == info.getRealname() &&
+				this.getUsername() == info.getUsername();
 	}
 }
