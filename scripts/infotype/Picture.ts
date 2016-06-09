@@ -105,10 +105,12 @@ class Picture extends Info {
 	 *
 	 * @constructor
 	 */
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
+	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
 				title : string = null, description : string = null, original : PictureURL = null, small : PictureURL = null, medium : PictureURL = null,
 				large : PictureURL = null, thumb : PictureURL = null, orientation : string = null, tags : Array<Tag> = new Array<Tag>(), owner : User = null) {
-		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
+		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
+
+		this.setClassName("Picture");
 
 		this._title = title;
 		this._description = description;
@@ -331,24 +333,7 @@ class Picture extends Info {
 	 * @return {Picture} The InfoType instance.
 	 */
 	static fromJSONObject(jsonObject : any) : Picture {
-		if (typeof(jsonObject._id) == "undefined") {
-			throw new InfoException("A Picture object should have an ID.");
-		}
-		if(typeof(jsonObject._priority) == "undefined") {
-			throw new InfoException("A Picture object should have a priority.");
-		}
-		if(typeof(jsonObject._creationDate) == "undefined") {
-			throw new InfoException("A Picture object should have a creationDate.");
-		}
-		if(typeof(jsonObject._castingDate) == "undefined") {
-			throw new InfoException("A Picture object should have a castingDate.");
-		}
-		if(typeof(jsonObject._obsoleteDate) == "undefined") {
-			throw new InfoException("A Picture object should have an obsoleteDate.");
-		}
-		if(typeof(jsonObject._durationToDisplay) == "undefined") {
-			throw new InfoException("A Picture object should have a durationToDisplay.");
-		}
+		var p : Picture = Info.getInfoFromJSONObject<Picture>(jsonObject, Picture);
 
 		if(typeof(jsonObject._title) == "undefined") {
 			throw new InfoException("A Picture object should have a title.");
@@ -380,8 +365,6 @@ class Picture extends Info {
 		if(typeof(jsonObject._owner) == "undefined") {
 			throw new InfoException("A Picture object should have an owner.");
 		}
-
-		var p : Picture = new Picture(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate);
 
 		p.setTitle(jsonObject._title);
 		p.setDescription(jsonObject._description);
@@ -420,5 +403,91 @@ class Picture extends Info {
 
 
 		return p;
+	}
+
+	/**
+	 * Check if 'this' is equal to info in param.
+	 *
+	 * @method equals
+	 * @param {Info} info - Info to update.
+	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
+	 */
+	equals(info : Picture) : boolean {
+		var firstCheck = this.getDescription() == info.getDescription() &&
+				this.getOrientation() == info.getOrientation() &&
+				this.getTitle() == info.getTitle();
+
+		if(firstCheck) {
+			var equalStatus = true;
+
+			if(this.getOriginal() != null && info.getOriginal() != null) {
+				equalStatus = equalStatus && this.getOriginal().equals(info.getOriginal());
+			} else {
+				if(this.getOriginal() != null || info.getOriginal() != null) {
+					return false;
+				}
+			}
+
+			if(this.getSmall() != null && info.getSmall() != null) {
+				equalStatus = equalStatus && this.getSmall().equals(info.getSmall());
+			} else {
+				if(this.getSmall() != null || info.getSmall() != null) {
+					return false;
+				}
+			}
+
+			if(this.getMedium() != null && info.getMedium() != null) {
+				equalStatus = equalStatus && this.getMedium().equals(info.getMedium());
+			} else {
+				if(this.getMedium() != null || info.getMedium() != null) {
+					return false;
+				}
+			}
+
+			if(this.getLarge() != null && info.getLarge() != null) {
+				equalStatus = equalStatus && this.getLarge().equals(info.getLarge());
+			} else {
+				if(this.getLarge() != null || info.getLarge() != null) {
+					return false;
+				}
+			}
+
+			if(this.getThumb() != null && info.getThumb() != null) {
+				equalStatus = equalStatus && this.getThumb().equals(info.getThumb());
+			} else {
+				if(this.getThumb() != null || info.getThumb() != null) {
+					return false;
+				}
+			}
+
+			if(this.getOwner() != null && info.getOwner() != null) {
+				equalStatus = equalStatus && this.getOwner().equals(info.getOwner());
+			} else {
+				if(this.getOwner() != null || info.getOwner() != null) {
+					return false;
+				}
+			}
+
+			if(this.getTags().length != info.getTags().length) {
+				return false;
+			} else {
+				this.getTags().forEach(function (tag:Tag) {
+					var existEqual = false;
+
+					info.getTags().forEach(function (otherTag:Tag) {
+						if (!existEqual) {
+							existEqual = tag.equals(otherTag);
+						}
+					});
+
+					equalStatus = equalStatus && existEqual;
+				});
+			}
+
+
+			return equalStatus;
+		} else {
+			return false;
+		}
 	}
 }

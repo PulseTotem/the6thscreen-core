@@ -65,9 +65,12 @@ class FeedNode extends Info {
      *
      * @constructor
      */
-    constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null,
+    constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
                 title : string = null, description : string = null, summary : string = null, url : string = null, author : string = null, mediaUrl : string = null) {
-        super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate);
+        super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
+
+		this.setClassName("FeedNode");
+
         this._title = title;
         this._description = description;
         this._summary = summary;
@@ -223,6 +226,12 @@ class FeedNode extends Info {
         if(typeof(jsonObject._durationToDisplay) == "undefined") {
             throw new InfoException("A FeedNode object should have a durationToDisplay.");
         }
+        if(typeof(jsonObject._serviceLogo) == "undefined") {
+            throw new InfoException("A FeedNode object should have a serviceLogo.");
+        }
+        if(typeof(jsonObject._serviceName) == "undefined") {
+            throw new InfoException("A FeedNode object should have a serviceName.");
+        }
 
         if(typeof(jsonObject._title) == "undefined") {
             throw new InfoException("A FeedNode object should have a title.");
@@ -239,9 +248,25 @@ class FeedNode extends Info {
         if(typeof(jsonObject._author) == "undefined") {
             throw new InfoException("A FeedNode object should have an author.");
         }
-        var fn : FeedNode = new FeedNode(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate,
+        var fn : FeedNode = new FeedNode(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName,
             jsonObject._title, jsonObject._description, jsonObject._summary, jsonObject._url, jsonObject._author, jsonObject._mediaUrl);
 
         return fn;
     }
+
+	/**
+	 * Check if 'this' is equal to info in param.
+	 *
+	 * @method equals
+	 * @param {Info} info - Info to update.
+	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
+	 */
+	equals(info : FeedNode) : boolean {
+		return this.getAuthor() == info.getAuthor() &&
+				this.getDescription() == info.getDescription() &&
+				this.getMediaUrl() == info.getMediaUrl() &&
+				this.getSummary() ==  info.getSummary() &&
+				this.getTitle() == info.getTitle() &&
+				this.getUrl() == info.getUrl();
+	}
 }

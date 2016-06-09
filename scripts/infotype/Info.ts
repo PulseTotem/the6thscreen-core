@@ -1,23 +1,62 @@
 /**
- * @author Christian Brel <christian@the6thscreen.fr, ch.brel@gmail.com>
- * @author Simon Urli <simon@the6thscreen.fr, simon.urli@gmail.com>
+ * @author Christian Brel <christian@pulsetotem.fr, ch.brel@gmail.com>
+ * @author Simon Urli <simon@pulsetotem.fr>
  */
 
+/// <reference path="./priorities/InfoPriority.ts" />
+/// <reference path="./exceptions/InfoException.ts" />
+/// <reference path="./SocialStats.ts" />
+
 class Info {
+    public static DEFAULT_DURATION = 10;
+
+	private _className : string;
+
 	private _id : string;
 	private _priority : number;
 	private _creationDate : Date;
 	private _castingDate : Date;
 	private _obsoleteDate : Date;
 	private _durationToDisplay : number;
+    private _serviceLogo : string;
+    private _serviceName : string;
 
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null) {
-		this._id = id;
-        this._priority = priority;
-        this._creationDate = creationDate;
-        this._obsoleteDate = obsoleteDate;
-        this._durationToDisplay = durationToDisplay;
-        this._castingDate = castingDate;
+	/**
+	 * Info's SocialStats.
+	 *
+	 * @property _socialStats
+	 * @type SocialStats
+	 * @private
+	 */
+	private _socialStats : SocialStats;
+
+	/**
+	 * Channel of Call attached to Info.
+	 *
+	 * @property _callChannel
+	 * @type string
+	 */
+	private _callChannel : string;
+
+	constructor(id : string = "noId", priority : number = InfoPriority.LOW, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = Info.DEFAULT_DURATION, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "") {
+        this.setId(id);
+        this.setPriority(priority);
+        this.setCreationDate(creationDate);
+        this.setObsoleteDate(obsoleteDate);
+        this.setDurationToDisplay(durationToDisplay);
+        this.setCastingDate(castingDate);
+        this.setServiceLogo(serviceLogo);
+        this.setServiceName(serviceName);
+
+		this._socialStats = new SocialStats();
+	}
+
+	getClassName() {
+		return this._className;
+	}
+
+	setClassName(className : string) {
+		this._className = className;
 	}
 
     getId() {
@@ -68,27 +107,128 @@ class Info {
         this._durationToDisplay = durationToDisplay;
     }
 
-	/**
-	 * Return an array of Info instance from a JSON Array.
-	 *
-	 * @method fromJSONArray
-	 * @static
-	 * @param {JSONArray} json - The JSON Array
-	 * @param {Info Class} infoClass - The Info Class contained in JSON Array
-	 */
-	static fromJSONArray(jsonArray : any, infoClass : any) {
-		var newListInfos = new Array();
+    getServiceLogo() {
+        return this._serviceLogo;
+    }
 
-		for(var iInfo in jsonArray) {
-			try {
-				var infoDesc = jsonArray[iInfo];
-				var infoInstance = infoClass.fromJSONObject(infoDesc);
-				newListInfos.push(infoInstance);
-			} catch(e) {
-				Logger.error(e);
-			}
+    setServiceLogo(serviceLogo : string) {
+        this._serviceLogo = serviceLogo;
+    }
+
+    getServiceName() {
+        return this._serviceName;
+    }
+
+    setServiceName(serviceName : string) {
+        this._serviceName = serviceName;
+    }
+
+	/**
+	 * Return channel of Call attached to Info.
+	 *
+	 * @method getCallChannel
+	 * @returns {string} call channel.
+	 */
+	getCallChannel() : string {
+		return this._callChannel;
+	}
+
+	/**
+	 * Set channel of Call attached to Info.
+	 *
+	 * @method setCallChannel
+	 * @param {string} callChannel - channel of call.
+	 */
+	setCallChannel(callChannel : string) {
+		this._callChannel = callChannel;
+	}
+
+	/**
+	 * Return Info's SocialStats.
+	 *
+	 * @method getSocialStats
+	 * @returns {SocialStats} Info's SocialStats.
+	 */
+	getSocialStats() : SocialStats {
+		return this._socialStats;
+	}
+
+	/**
+	 * Set Info's SocialStats.
+	 *
+	 * @method setSocialStats
+	 * @param {SocialStats} callChannel - new Info's SocialStats.
+	 */
+	setSocialStats(socialStats : SocialStats) {
+		this._socialStats = socialStats;
+	}
+
+    static getInfoFromJSONObject<T extends Info>(jsonObject : any, type: any ) : T {
+        if (typeof(jsonObject._id) == "undefined") {
+            throw new InfoException("An Info object should have an ID.");
+        }
+        if(typeof(jsonObject._priority) == "undefined") {
+            throw new InfoException("An Info object should have a priority.");
+        }
+        if(typeof(jsonObject._creationDate) == "undefined") {
+            throw new InfoException("An Info object should have a creationDate.");
+        }
+        if(typeof(jsonObject._castingDate) == "undefined") {
+            throw new InfoException("An Info object should have a castingDate.");
+        }
+        if(typeof(jsonObject._obsoleteDate) == "undefined") {
+            throw new InfoException("An Info object should have an obsoleteDate.");
+        }
+        if(typeof(jsonObject._durationToDisplay) == "undefined") {
+            throw new InfoException("An Info object should have a durationToDisplay.");
+        }
+        if(typeof(jsonObject._serviceLogo) == "undefined") {
+            throw new InfoException("An Info object should have a serviceLogo.");
+        }
+        if(typeof(jsonObject._serviceName) == "undefined") {
+            throw new InfoException("An Info object should have a serviceName.");
+        }
+		if(typeof(jsonObject._socialStats) == "undefined") {
+			throw new InfoException("An Info object should have socialStats.");
 		}
 
-		return newListInfos;
+        var result = new type();
+        result.setId(jsonObject._id);
+        result.setPriority(jsonObject._priority);
+        result.setCreationDate(jsonObject._creationDate);
+        result.setCastingDate(jsonObject._castingDate);
+        result.setObsoleteDate(jsonObject._obsoleteDate);
+        result.setDurationToDisplay(jsonObject._durationToDisplay);
+        result.setServiceLogo(jsonObject._serviceLogo);
+        result.setServiceName(jsonObject._serviceName);
+		result.setSocialStats(SocialStats.fromJSONObject(jsonObject._socialStats));
+        return result;
+    }
+
+	/**
+	 * Check if 'this' is equal to info in param.
+	 *
+	 * @method equals
+	 * @param {Info} info - Info to update.
+	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
+	 */
+	equals(info : Info) : boolean {
+		throw new InfoException("Info - equals : Method need to be implemented.");
+		return false;
 	}
+
+    /**
+     * This method needs to be implemented in each "Container" info type: it is called to propagate the information about service to the children.
+     */
+    propagateServiceInfo() {
+        throw new InfoException("Info - propagateServiceInfo : Method need to be implemented.");
+    }
+
+
+    static replaceServiceInfoInChildren(children : Array<Info>, parent : Info) {
+        children.forEach(function (info: Info) {
+            info.setServiceLogo(parent.getServiceLogo());
+            info.setServiceName(parent.getServiceName());
+        });
+    }
 }
