@@ -91,13 +91,22 @@ class Tweet extends Info {
 	private _originalTweet : Tweet;
 
 	/**
+	 * Tweet's animated gifs.
+	 *
+	 * @property _animated_gifs
+	 * @type Array<VideoURL>
+	 * @private
+	 */
+	private _animated_gifs : Array<VideoURL>;
+
+	/**
 	 * Constructor.
 	 *
 	 * @constructor
 	 */
 	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
 				owner : User = null, message : string = null, favoriteCount : number = 0, retweetCount : number = 0, lang : string = null, sensitive : boolean = false,
-				pictures : Array<Picture> = new Array<Picture>(), hashtags : Array<Tag> = new Array<Tag>(), originalTweet : Tweet = null) {
+				pictures : Array<Picture> = new Array<Picture>(), hashtags : Array<Tag> = new Array<Tag>(), originalTweet : Tweet = null, animated_gifs : Array<VideoURL> = new Array<VideoURL>()) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
 		this.setClassName("Tweet");
@@ -111,6 +120,7 @@ class Tweet extends Info {
 		this.setOriginalTweet(originalTweet);
 		this._pictures = pictures;
 		this._hashtags = hashtags;
+		this._animated_gifs = animated_gifs;
 	}
 
 	/**
@@ -296,6 +306,25 @@ class Tweet extends Info {
 	}
 
 	/**
+	 * Returns Tweet's animated gifs.
+	 *
+	 * @method getAnimatedGifs
+	 */
+	getAnimatedGifs() : Array<VideoURL> {
+		return this._animated_gifs;
+	}
+
+	/**
+	 * Add VideoURL into Animated Gifs list.
+	 *
+	 * @method addAnimatedGif
+	 * @param {VideoURL} video - Video to add as Animated Gif.
+	 */
+	addAnimatedGif(video : VideoURL) {
+		this._animated_gifs.push(video);
+	}
+
+	/**
 	 * Return a Tweet instance from a JSON Object.
 	 *
 	 * @method fromJSONObject
@@ -356,6 +385,9 @@ class Tweet extends Info {
 		if(typeof(jsonObject._hashtags) == "undefined") {
 			throw new InfoException("A Tweet object should have hashtags.");
 		}
+		if(typeof(jsonObject._animated_gifs) == "undefined") {
+			throw new InfoException("A Tweet object should have animated gifs.");
+		}
 
 		var t : Tweet = new Tweet(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName);
 
@@ -383,6 +415,12 @@ class Tweet extends Info {
 			var htDesc = jsonObject._hashtags[j];
 			var ht : Tag = Tag.fromJSONObject(htDesc);
 			t.addHashtag(ht);
+		}
+
+		for(var i = 0; i < jsonObject._animated_gifs.length; i++) {
+			var videoDesc = jsonObject._animated_gifs[i];
+			var video : VideoURL = VideoURL.fromJSONObject(videoDesc);
+			t.addAnimatedGif(video);
 		}
 
 		return t;
@@ -445,6 +483,22 @@ class Tweet extends Info {
 					info.getPictures().forEach(function (otherPicture:Picture) {
 						if (!existEqual) {
 							existEqual = picture.equals(otherPicture);
+						}
+					});
+
+					equalStatus = equalStatus && existEqual;
+				});
+			}
+
+			if(this.getAnimatedGifs().length != info.getAnimatedGifs().length) {
+				return false;
+			} else {
+				this.getAnimatedGifs().forEach(function (video:VideoURL) {
+					var existEqual = false;
+
+					info.getAnimatedGifs().forEach(function (otherVideo:VideoURL) {
+						if (!existEqual) {
+							existEqual = video.equals(otherVideo);
 						}
 					});
 
