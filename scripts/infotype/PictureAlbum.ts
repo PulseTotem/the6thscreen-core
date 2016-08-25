@@ -1,5 +1,5 @@
 /**
- * @author Christian Brel <christian@the6thscreen.fr, ch.brel@gmail.com>
+ * @author Christian Brel <christian@pulsetotem.fr, ch.brel@gmail.com>
  */
 
 /// <reference path="./Info.ts" />
@@ -7,6 +7,15 @@
 /// <reference path="./exceptions/InfoException.ts" />
 
 class PictureAlbum extends Info {
+
+	/**
+	 * PictureAlbum's name.
+	 *
+	 * @property _name
+	 * @type string
+	 * @private
+	 */
+	private _name : string;
 
 	/**
 	 * PictureAlbum's pictures.
@@ -22,13 +31,35 @@ class PictureAlbum extends Info {
 	 *
 	 * @constructor
 	 */
-	constructor(id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
+	constructor(name : string = "", id : string = "noId", priority : number = 0, creationDate : Date = null, obsoleteDate : Date = null, durationToDisplay : number = 10, castingDate : Date = null, serviceLogo : string = "", serviceName : string = "",
 				pictures : Array<Picture> = new Array<Picture>()) {
 		super(id, priority, creationDate, obsoleteDate, durationToDisplay, castingDate, serviceLogo, serviceName);
 
 		this.setClassName("PictureAlbum");
 
+		this.setName(name);
+
 		this._pictures = pictures;
+	}
+
+	/**
+	 * Returns PictureAlbum's name.
+	 *
+	 * @method getName
+	 * @returns {string} The PictureAlbum's name.
+	 */
+	getName() : string {
+		return this._name;
+	}
+
+	/**
+	 * Set the PictureAlbum's name.
+	 *
+	 * @method setName
+	 * @param {string} name - The new PictureAlbum's name.
+	 */
+	setName(name : string) {
+		this._name = name;
 	}
 
 	/**
@@ -85,11 +116,14 @@ class PictureAlbum extends Info {
 			throw new InfoException("A PictureAlbum object should have a serviceLogo.");
 		}
 
+		if(typeof(jsonObject._name) == "undefined") {
+			throw new InfoException("A PictureAlbum object should have a name.");
+		}
 		if(typeof(jsonObject._pictures) == "undefined") {
 			throw new InfoException("A PictureAlbum object should have pictures.");
 		}
 
-		var pa : PictureAlbum = new PictureAlbum(jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName);
+		var pa : PictureAlbum = new PictureAlbum(jsonObject._name, jsonObject._id, jsonObject._priority, jsonObject._creationDate, jsonObject._obsoleteDate, jsonObject._durationToDisplay, jsonObject._castingDate, jsonObject._serviceLogo, jsonObject._serviceName);
 
 		for(var i = 0; i < jsonObject._pictures.length; i++) {
 			var pDesc = jsonObject._pictures[i];
@@ -108,7 +142,7 @@ class PictureAlbum extends Info {
 	 * @return {boolean} 'true' if objects are equals, 'false' otherwise
 	 */
 	equals(info : PictureAlbum) : boolean {
-		if(this.getPictures().length != info.getPictures().length) {
+		if(this.getName() != info.getName() || this.getPictures().length != info.getPictures().length) {
 			return false;
 		} else {
 			var equalStatus = true;
